@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:34 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/15 05:16:41 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/16 08:53:56 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,29 @@ static void	ft_error(char *arg, char *str, int error_code)
 	if (error_code == 1)
 		ft_putstr_fd(arg, 2);
 	ft_putstr_fd(str, 2);
+}
+
+int	ft_exit(char **args, t_minishell *shell)
+{
+	int	exit_code;
+
+	exit_code = shell->exit_s;
+	if (!args[1])
+	{
+		ft_putstr_fd("exit\n", 2);
+		exit(exit_code);
+	}
+	if (!ft_isnumber(args[1]) || ft_is_too_big(args[1]))
+	{
+		ft_error(args[1], ": numeric argument required\n", 1);
+		exit(2);
+	}
+	if (args[2])
+	{
+		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
+		return (1);
+	}
+	exit_code = (unsigned char)ft_atoll(args[1]);
+	ft_putstr_fd("exit\n", 2);
+	exit(exit_code);
 }

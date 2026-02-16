@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:25:25 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 08:16:43 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/16 09:14:20 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # include "parser.h"
 # include "utils.h"
 # include <dirent.h>
+# include <errno.h>
 # include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
@@ -32,14 +34,12 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
-#include <linux/limits.h>
-
 
 typedef struct s_env
 {
 	char			*key;
 	char			*value;
-	struct t_env	*next;
+	struct s_env	*next;
 }					t_env;
 
 typedef struct s_minishell

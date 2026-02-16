@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:48 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/15 03:43:58 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/16 09:04:01 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,19 @@ int	ft_echo(char **args)
 	int i;
 	int newline;
 
-	i = 0;
+	i = 1;
 	newline = 1;
-	while (args[++i] && ft_is_opt_n(args[i]))
+	while (args[i] && ft_is_opt_n(args[i]))
+	{
 		newline = 0;
-	while (args[++i])
+		i++;
+	}
+	while (args[i])
 	{
 		ft_putstr_fd(args[i], STDOUT_FILENO);
 		if (args[i + 1])
 			ft_putstr_fd(" ", 1);
+		i++;
 	}
 	if (newline)
 		ft_putstr_fd("\n", 1);

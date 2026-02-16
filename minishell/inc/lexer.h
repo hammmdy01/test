@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/12 11:07:09 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/16 09:15:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ void				print_tokens(t_token *tokens);
 int ft_validate_syntax(t_token *tokens);
 int ft_is_operator(t_token_type type);
 int	ft_is_redirection(t_token_type type);
-int	ft_is_operator(t_token_type type);
 
 
 #endif
