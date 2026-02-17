@@ -1,0 +1,14 @@
+command_line    → list
+
+list            → pipeline (list_op pipeline)*
+
+list_op         → '&&' | '||' | ';'
+
+pipeline        → subshell ('|' subshell)*
+                | simple_cmd ('|' simple_cmd)*
+
+subshell        → '(' list ')'
+
+simple_cmd      → redirect* word (word | redirect)*
+
+redirect        → '<' word | '>' word | '>>' word | '<<' word

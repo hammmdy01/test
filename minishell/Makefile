@@ -6,7 +6,7 @@
 #    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/16 09:15:53 by hazali           ###   ########.fr        #
+#    Updated: 2026/02/16 09:36:24 by hazali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ PARSER_FILES = 	$(PARSER_DIR)/test.c \
 				$(PARSER_DIR)/test2.c
 EXEC_FILES = 	$(EXEC_DIR)/test.c \
 				$(EXEC_DIR)/test2.c
-UTILS_FILES = 	$(UTILS_DIR)/test.c \
+UTILS_FILES = 	$(UTILS_DIR)/utils.c \
 				$(UTILS_DIR)/test2.c
 
 SRC = 	$(SRC_DIR)/main.c $(LEXER_FILES) $(PARSER_FILES) \
