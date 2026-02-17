@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 09:15:19 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/17 10:07:11 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef enum e_token_type
 	T_CLOSE_PARENT,
 	T_AND,
 	T_OR,
+	T_EOF
 }					t_token_type;
 
 typedef struct s_token

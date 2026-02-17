@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/12 11:31:41 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/17 10:22:37 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int main(void)
 {
     char *line;
     t_token *tokens;
-    
+    t_node  ast;
     printf("=== MINISHELL LEXER TESTS ===\n\n");
     
     while (1)
@@ -88,6 +88,7 @@ int main(void)
         // Tokeniser
         tokens = ft_tokenize(line);
         
+        ast = ft_parsing(tokens);
         if (!tokens)
         {
             printf("❌ Syntax error detected\n");
