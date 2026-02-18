@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/17 10:07:11 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/18 11:41:10 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_token
 	struct s_token	*prev;
 }					t_token;
 
-t_token				*ft_tokenize(char *line);
+t_token				*ft_lexer(char *line);
 void				ft_clear_all_token(t_token **lst);
 t_token				*ft_new_token(char *value, t_token_type type);
 int					ft_isspace(char c);

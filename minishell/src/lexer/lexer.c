@@ -6,13 +6,13 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:53 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/12 11:14:35 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/18 11:41:26 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *ft_tokenize(char *line)
+t_token *ft_lexer(char *line)
 {
     t_token *token_list;
     int error;

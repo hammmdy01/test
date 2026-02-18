@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
+#    By: hammm <hammm@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/16 09:36:24 by hazali           ###   ########.fr        #
+#    Updated: 2026/02/18 12:18:22 by hammm            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ LEXER_FILES = 	$(LEXER_DIR)/lexer.c \
 				$(LEXER_DIR)/test.c  \
 				$(LEXER_DIR)/test2.c  
 
-PARSER_FILES = 	$(PARSER_DIR)/test.c \
+PARSER_FILES = 	$(PARSER_DIR)/test1.c \
 				$(PARSER_DIR)/test2.c
 EXEC_FILES = 	$(EXEC_DIR)/test.c \
 				$(EXEC_DIR)/test2.c

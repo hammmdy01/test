@@ -1,0 +1,2 @@
+dans le lexer je traite deja pas mal de cas d'erreur qui normalement doivent etre dans le parser et pas le lexer par exemple < < ou > > ou > | etc etc car ce sont des erreurs de syntaxes lié a la grammaire et le lexer n'a rien a voir avec ca.
+A revoir les differents messages a renvoyer au cas d erreurs.
