@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 15:59:47 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/19 16:41:02 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_node	*ft_parse_parentheses(t_token **list_token)
 
 	ft_next_token(list_token);
 	node = ft_parse_expression(list_token, 0);
-	if (!node || (*list_token) || (*list_token)->type != T_CLOSE_PARENT)
+	if (!node || ((*list_token) && (*list_token)->type != T_CLOSE_PARENT))
 	{
 		ft_putendl_fd("minishell: Syntax error: expected ')'", STDERR_FILENO);
 		ft_clear_ast(&node);
