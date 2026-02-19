@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 13:51:06 by hazali            #+#    #+#             */
-/*   Updated: 2025/11/07 17:04:53 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/19 11:09:31 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*ft_strdup(const char *s)
 	char	*dest;
 	int		i;
 
+	// if (!s)
+	// 	return (NULL);
 	i = 0;
 	while (s[i])
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 01:24:48 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 16:17:36 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,202 @@ int	main(void)
 		
 		// Cleanup
 		ft_clear_all_token(&tokens);
-		// TODO: add ft_clear_ast(ast) when you implement it
+		ft_clear_ast(&ast);
 		free(line);
 	}
 	rl_clear_history();
 	return (0);
 }
+
+// void test_basic_redirections(void)
+// {
+//     printf("\n=== TEST 1: Redirections basiques ===\n");
+    
+//     char *tests[] = {
+//         "cat < input.txt",          // fd=0 implicite
+//         "echo hello > output.txt",  // fd=1 implicite
+//         "cat << EOF",               // fd=0 implicite
+//         "echo test >> log.txt",     // fd=1 implicite
+//         NULL
+//     };
+    
+//     for (int i = 0; tests[i]; i++)
+//     {
+//         printf("\nInput: %s\n", tests[i]);
+//         t_token *tokens = ft_lexer(tests[i]);
+//         if (tokens)
+//         {
+//             print_tokens(tokens);
+//             t_node *ast = ft_parsing(tokens);
+//             if (ast)
+//             {
+//                 ft_print_ast(ast);
+//                 ft_clear_ast(&ast);
+//             }
+//             ft_clear_all_token(&tokens);
+//         }
+//     }
+// }
+
+// void test_explicit_fd_redirections(void)
+// {
+//     printf("\n=== TEST 2: Redirections avec FD explicites ===\n");
+    
+//     char *tests[] = {
+//         "cat 2> err.txt",               // stderr vers err.txt
+//         "ls -la 1> out.txt 2> err.txt", // stdout et stderr séparés
+//         "echo test 1>> log.txt",        // stdout en append
+//         "cat 2>> errors.log",           // stderr en append
+//         "cmd 3> file3.txt",             // fd custom 3
+//         "cmd 0< input.txt 1> out.txt 2> err.txt", // Triple redirection
+//         NULL
+//     };
+    
+//     for (int i = 0; tests[i]; i++)
+//     {
+//         printf("\nInput: %s\n", tests[i]);
+//         t_token *tokens = ft_lexer(tests[i]);
+//         if (tokens)
+//         {
+//             print_tokens(tokens);
+//             t_node *ast = ft_parsing(tokens);
+//             if (ast)
+//             {
+//                 ft_print_ast(ast);
+//                 ft_clear_ast(&ast);
+//             }
+//             ft_clear_all_token(&tokens);
+//         }
+//     }
+// }
+
+// void test_multiple_redirections(void)
+// {
+//     printf("\n=== TEST 3: Redirections multiples ===\n");
+    
+//     char *tests[] = {
+//         "cat < in1.txt < in2.txt",      // Double input (dernier gagne)
+//         "echo test > out1.txt > out2.txt", // Double output (dernier gagne)
+//         "cat < input.txt > output.txt 2> error.txt", // Triple redirection
+//         "cmd 1> out.txt 2> err.txt 3> custom.txt",   // 3 fd différents
+//         NULL
+//     };
+    
+//     for (int i = 0; tests[i]; i++)
+//     {
+//         printf("\nInput: %s\n", tests[i]);
+//         t_token *tokens = ft_lexer(tests[i]);
+//         if (tokens)
+//         {
+//             print_tokens(tokens);
+//             t_node *ast = ft_parsing(tokens);
+//             if (ast)
+//             {
+//                 ft_print_ast(ast);
+//                 ft_clear_ast(&ast);
+//             }
+//             ft_clear_all_token(&tokens);
+//         }
+//     }
+// }
+
+// void test_pipes_with_fd(void)
+// {
+//     printf("\n=== TEST 4: Pipes avec redirections FD ===\n");
+    
+//     char *tests[] = {
+//         "cat < in.txt | grep test",
+//         "ls -la 2> err.txt | wc -l",
+//         "cat file.txt | grep test > out.txt 2> err.txt",
+//         "cmd1 2> err1.txt | cmd2 2> err2.txt | cmd3 > final.txt",
+//         NULL
+//     };
+    
+//     for (int i = 0; tests[i]; i++)
+//     {
+//         printf("\nInput: %s\n", tests[i]);
+//         t_token *tokens = ft_lexer(tests[i]);
+//         if (tokens)
+//         {
+//             print_tokens(tokens);
+//             t_node *ast = ft_parsing(tokens);
+//             if (ast)
+//             {
+//                 ft_print_ast(ast);
+//                 ft_clear_ast(&ast);
+//             }
+//             ft_clear_all_token(&tokens);
+//         }
+//     }
+// }
+
+// void test_edge_cases(void)
+// {
+//     printf("\n=== TEST 5: Cas limites ===\n");
+    
+//     char *tests[] = {
+//         "cat 0< in.txt",        // fd 0 explicite
+//         "echo test 1> out.txt", // fd 1 explicite
+//         "cmd 9> file9.txt",     // fd très élevé
+//         "cat 2> err.txt < in.txt > out.txt", // Ordre mélangé
+//         NULL
+//     };
+    
+//     for (int i = 0; tests[i]; i++)
+//     {
+//         printf("\nInput: %s\n", tests[i]);
+//         t_token *tokens = ft_lexer(tests[i]);
+//         if (tokens)
+//         {
+//             print_tokens(tokens);
+//             t_node *ast = ft_parsing(tokens);
+//             if (ast)
+//             {
+//                 ft_print_ast(ast);
+//                 ft_clear_ast(&ast);
+//             }
+//             ft_clear_all_token(&tokens);
+//         }
+//     }
+// }
+
+// void print_test_summary(void)
+// {
+//     printf("\n");
+//     printf("╔══════════════════════════════════════════════════════════╗\n");
+//     printf("║              📊 TEST SUMMARY                              ║\n");
+//     printf("╚══════════════════════════════════════════════════════════╝\n");
+//     printf("\n");
+//     printf("Tests effectués:\n");
+//     printf("  ✅ Redirections basiques (<, >, <<, >>)\n");
+//     printf("  ✅ Redirections avec FD explicites (2>, 3<, etc.)\n");
+//     printf("  ✅ Redirections multiples\n");
+//     printf("  ✅ Pipes avec redirections FD\n");
+//     printf("  ✅ Cas limites\n");
+//     printf("\n");
+//     printf("Fonctionnalités testées:\n");
+//     printf("  • Détection des FD explicites dans le lexer\n");
+//     printf("  • Parsing correct des redirections avec FD\n");
+//     printf("  • Création de l'AST avec io_list contenant les FD\n");
+//     printf("  • Affichage correct des FD dans print_ast\n");
+//     printf("\n");
+//     printf("Prochaine étape:\n");
+//     printf("  → Implémenter l'exécution avec apply_redirections()\n");
+//     printf("\n");
+// }
+
+// int main(void)
+// {
+//     printf("╔══════════════════════════════════════════════════════════╗\n");
+//     printf("║     🧪 TEST SUITE - FD REDIRECTIONS                      ║\n");
+//     printf("╚══════════════════════════════════════════════════════════╝\n");
+    
+//     test_basic_redirections();
+//     test_explicit_fd_redirections();
+//     test_multiple_redirections();
+//     test_pipes_with_fd();
+//     test_edge_cases();
+//     print_test_summary();
+    
+//     return (0);
+// }

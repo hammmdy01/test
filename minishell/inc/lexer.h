@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 01:29:06 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 14:27:44 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef struct s_token
 {
 	t_token_type	type;
 	char			*value;
+	int				fd;
 	struct s_token	*next;
 	struct s_token	*prev;
 }					t_token;
@@ -50,10 +51,11 @@ int					ft_skip_quotes(char *line, size_t *i);
 void				ft_print_quote_err(char c);
 int					ft_append_word(char **ptr_line, t_token **token_list);
 void				print_tokens(t_token *tokens);
-int ft_validate_syntax(t_token *tokens);
-int ft_is_operator(t_token_type type);
-int	ft_is_redirection(t_token_type type);
-char	*ft_get_token_str(t_token_type type);
-
+int					ft_validate_syntax(t_token *tokens);
+int					ft_is_operator(t_token_type type);
+int					ft_is_redirection(t_token_type type);
+char				*ft_get_token_str(t_token_type type);
+int					ft_handle_fd_redirection(char **line, t_token **list);
+int					ft_is_fd_redirection(char *line);
 
 #endif

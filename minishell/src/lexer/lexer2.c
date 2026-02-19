@@ -1,16 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test2.c                                            :+:      :+:    :+:   */
+/*   lexer2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/09 15:36:50 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/19 15:31:30 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	ft_handle_fd_redirection(char **line, t_token **list)
+{
+	int		fd;
+	int		i;
+	char	*start;
+	t_token	*token;
+
+	i = 0;
+	start = *line;
+	while (ft_isdigit((*line)[i]))
+		i++;
+	fd = ft_atoi(start);
+	*line += i;
+	if (!ft_strncmp(*line, ">>", 2))
+		token = ft_new_token(NULL, T_DGREAT);
+	else if (!ft_strncmp(*line, "<<", 2))
+		token = ft_new_token(NULL, T_DLESS);
+	else if (**line == '>')
+		token = ft_new_token(NULL, T_GREAT);
+	else if (**line == '<')
+		token = ft_new_token(NULL, T_LESS);
+	else
+		return (0);
+	if (!token)
+		return (0);
+	token->fd = fd;
+	ft_add_token(list, token);
+	if (!ft_strncmp(*line, ">>", 2) || !ft_strncmp(*line, "<<", 2))
+		*line += 2;
+	else
+		(*line)++;
+	return (1);
+}
 
 t_token	*ft_new_token(char *value, t_token_type type)
 {
@@ -21,6 +55,7 @@ t_token	*ft_new_token(char *value, t_token_type type)
 		return (NULL);
 	new_token->value = value;
 	new_token->type = type;
+	new_token->fd = -1; // pas sur sur
 	return (new_token);
 }
 

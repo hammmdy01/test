@@ -3,46 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:53 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/18 11:41:26 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:32:18 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *ft_lexer(char *line)
+t_token	*ft_lexer(char *line)
 {
-    t_token *token_list;
-    int error;
+	t_token	*token_list;
+	int		error;
 
-    error = 0;
-    token_list = NULL;
-    while (*line)
-    {
-        if (error)
-            return (ft_clear_all_token(&token_list), NULL);
-        
-        while (*line && ft_isspace(*line))
-            line++;
-        
-        if (!*line)  
-            break;
-            
-        if (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)
-            || !ft_strncmp(line, "&&", 2) || !ft_strncmp(line, "||", 2))
-            error = (!ft_handle_separator(&line, &token_list));
-        else if (*line == '<' || *line == '>' || *line == '|'
-                 || *line == '(' || *line == ')')
-            error = (!ft_handle_separator(&line, &token_list));
-        else
-            error = (!ft_append_word(&line, &token_list));
-    }
-    
-    if (token_list && !ft_validate_syntax(token_list))
-        return (ft_clear_all_token(&token_list), NULL);
-    return (token_list);
+	error = 0;
+	token_list = NULL;
+	while (*line)
+	{
+		if (error)
+			return (ft_clear_all_token(&token_list), NULL);
+		while (*line && ft_isspace(*line))
+			line++;
+		if (!*line)
+			break ;
+		if (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)
+			|| !ft_strncmp(line, "&&", 2) || !ft_strncmp(line, "||", 2))
+			error = (!ft_handle_separator(&line, &token_list));
+		else if (ft_is_fd_redirection(line))
+			error = (!ft_handle_fd_redirection(&line, &token_list));
+		else if (*line == '<' || *line == '>' || *line == '|' || *line == '('
+			|| *line == ')')
+			error = (!ft_handle_separator(&line, &token_list));
+		else
+			error = (!ft_append_word(&line, &token_list));
+	}
+	if (token_list && !ft_validate_syntax(token_list))
+		return (ft_clear_all_token(&token_list), NULL);
+	return (token_list);
+}
+
+int	ft_is_fd_redirection(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (!ft_isdigit(line[i]))
+		return (0);
+	while (ft_isdigit(line[i]))
+		i++;
+	if (line[i] == '>' || line[i] == '<')
+		return (1);
+	return (0);
 }
 
 int	ft_isspace(char c)
@@ -81,6 +93,10 @@ int	ft_append_separator(t_token_type type, char **ptr_line,
 	t_token	*token;
 
 	token = ft_new_token(NULL, type);
+	if (type == T_GREAT || type == T_DGREAT)
+		token->fd = 1;
+	else if (type == T_LESS || type == T_DLESS)
+		token->fd = 0;
 	if (!token)
 		return (0);
 	ft_add_token(token_list, token);
@@ -92,10 +108,10 @@ int	ft_append_separator(t_token_type type, char **ptr_line,
 
 int	ft_append_word(char **ptr_line, t_token **token_list)
 {
-	char *tmp_line;
-	char *value;
-	t_token *token;
-	size_t i;
+	char	*tmp_line;
+	char	*value;
+	t_token	*token;
+	size_t	i;
 
 	tmp_line = *ptr_line;
 	i = 0;
@@ -118,22 +134,23 @@ int	ft_append_word(char **ptr_line, t_token **token_list)
 	*ptr_line += i;
 	return (ft_add_token(token_list, token), 1);
 }
-void print_tokens(t_token *tokens)
+void	print_tokens(t_token *tokens)
 {
-    t_token *curr = tokens;
-    static const char *type_names[] = {
-        "WORD", "LESS", "GREAT", "DLESS", "DGREAT",
-        "PIPE", "OPEN_PARENT", "CLOSE_PARENT", "AND", "OR"
-    };
-    
-    printf("=== TOKENS ===\n");
-    while (curr)
-    {
-        printf("[%s]", type_names[curr->type]);
-        if (curr->value)
-            printf(" '%s'", curr->value);
-        printf("\n");
-        curr = curr->next;
-    }
-    printf("==============\n");
+	t_token				*curr;
+	static const char	*type_names[] = {"WORD", "LESS", "GREAT", "DLESS",
+			"DGREAT", "PIPE", "OPEN_PARENT", "CLOSE_PARENT", "AND", "OR"};
+
+	curr = tokens;
+	printf("=== TOKENS ===\n");
+	while (curr)
+	{
+		printf("[%s]", type_names[curr->type]);
+		if (curr->value)
+			printf(" '%s'", curr->value);
+		if (curr->fd > 0)
+			printf(" (fd: %d)", curr->fd);
+		printf("\n");
+		curr = curr->next;
+	}
+	printf("==============\n");
 }

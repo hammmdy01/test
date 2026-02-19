@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:44:32 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/19 01:23:41 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:54:56 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,13 @@ static void	print_io_list(t_io_node *io_list, int indent)
 		i = 0;
 		while (i++ < indent)
 			printf("  ");
-		printf("  📄 IO: %s %s\n", get_io_type_str(current->type),
-			current->value);
+		printf("  📄 IO: ");
+		
+		// Afficher le fd si ce n'est pas le fd par défaut
+		if (current->fd != 0 && current->fd != 1)
+			printf("%d", current->fd);
+		
+		printf("%s %s\n", get_io_type_str(current->type), current->value);
 		current = current->next;
 	}
 }
@@ -92,17 +97,15 @@ static void	print_ast_recursive(t_node *node, int depth, char *prefix)
 		printf("  ");
 	printf("%s", prefix);
 	printf("🌳 [%s]\n", get_node_type_str(node->type));
+	
 	if (node->type == N_CMD)
 	{
-		i = 0;
-		while (i++ < depth)
-			printf("  ");
-		printf("  📝 Raw args: \"%s\"\n", node->args ? node->args : "(null)");
 		if (node->expand_args)
 			print_command_args(node->expand_args, depth);
 		if (node->io_list)
 			print_io_list(node->io_list, depth);
 	}
+	
 	if (node->left)
 	{
 		i = 0;
@@ -111,6 +114,7 @@ static void	print_ast_recursive(t_node *node, int depth, char *prefix)
 		printf("  ⬅️  LEFT:\n");
 		print_ast_recursive(node->left, depth + 1, "");
 	}
+	
 	if (node->right)
 	{
 		i = 0;
@@ -124,20 +128,23 @@ static void	print_ast_recursive(t_node *node, int depth, char *prefix)
 void	ft_print_ast(t_node *ast)
 {
 	printf("\n");
-	printf("╔════════════════════════════════════════════════════════════╗\n");
-	printf("║              🔍 AST DEBUG - TREE STRUCTURE                ║\n");
-	printf("╚════════════════════════════════════════════════════════════╝\n");
+	printf("╔══════════════════════════════════════════════════════════╗\n");
+	printf("║              📊 AST DEBUG - TREE STRUCTURE                ║\n");
+	printf("╚══════════════════════════════════════════════════════════╝\n");
 	printf("\n");
+	
 	if (!ast)
 	{
 		printf("  ⚠️  AST is NULL (empty or error in parsing)\n\n");
 		return ;
 	}
+	
 	print_ast_recursive(ast, 0, "");
+	
 	printf("\n");
-	printf("╔════════════════════════════════════════════════════════════╗\n");
-	printf("║                     🏁 END OF AST                         ║\n");
-	printf("╚════════════════════════════════════════════════════════════╝\n");
+	printf("╔══════════════════════════════════════════════════════════╗\n");
+	printf("║                     ✅ END OF AST                         ║\n");
+	printf("╚══════════════════════════════════════════════════════════╝\n");
 	printf("\n");
 }
 
@@ -161,3 +168,4 @@ void	ft_print_ast_compact(t_node *ast)
 		printf("%s", get_node_type_str(ast->type));
 	printf("\n");
 }
+
