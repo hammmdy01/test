@@ -6,7 +6,7 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/18 11:41:10 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 01:29:06 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void				print_tokens(t_token *tokens);
 int ft_validate_syntax(t_token *tokens);
 int ft_is_operator(t_token_type type);
 int	ft_is_redirection(t_token_type type);
+char	*ft_get_token_str(t_token_type type);
 
 
 #endif

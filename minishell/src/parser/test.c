@@ -6,7 +6,7 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/18 14:44:24 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 01:44:48 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_node *ft_parse_expression(t_token **list_token, int precedence)
         right = ft_parse_expression(list_token, curr_precedence + 1);
         if(!right)
             return (ft_clear_ast(&left),NULL);
-        left = ft_create_node(type_operator, left, right);
+        left = ft_create_node(ft_token_to_node_type(type_operator), left, right);
         if(!left)
             return (ft_clear_ast(&right), ft_clear_ast(&left), NULL);
     }
@@ -73,9 +73,7 @@ t_node *ft_parse_parentheses(t_token **list_token)
 }
 
 t_node *ft_parse_primary(t_token **list_token)
-{
-    t_node *node;
-    
+{    
     if (!*list_token)
     {
         ft_putendl_fd("minishell: Syntax error: unexpected end of input", STDERR_FILENO);
@@ -109,11 +107,11 @@ t_node *ft_parse_command(t_token **list_token)
     return (node);
 }
 
-int parse_word_redir(t_node *node, t_token **list_token)
+int ft_parse_word_redir(t_node *node, t_token **list_token)
 {
     if (ft_is_redirection((*list_token)->type))
 	{
-		if (!ft_parse_io_redirections(node, list_token))
+		if (!ft_parse_io_redir(node, list_token))
 			return (0);
 	}
 	else
@@ -165,11 +163,11 @@ int ft_parse_args(t_node *node, t_token **list_token)
     return (1);
 }
 
-ft_parse_io_redir(t_node *node, t_token **list_token)
+int ft_parse_io_redir(t_node *node, t_token **list_token)
 {
     t_io_node *io_node;
     
-    io_node = ft_create_io_node((*list_token)->type, (*list_token)->value);
+    io_node = ft_create_io_node(ft_token_to_io_type((*list_token)->type), (*list_token)->value);
     if (!io_node)
         return (0);
     ft_add_io_node(&node->io_list, io_node);
@@ -182,7 +180,7 @@ ft_parse_io_redir(t_node *node, t_token **list_token)
     return (1);
 }
 
-ft_create_node(t_token_type type, t_node *left, t_node *right)
+t_node *ft_create_node(t_node_type type, t_node *left, t_node *right)
 {
     t_node *node;
     
@@ -198,7 +196,7 @@ ft_create_node(t_token_type type, t_node *left, t_node *right)
     return (node);
 }
 
-ft_create_io_node(t_token_type type, char *value)
+t_io_node *ft_create_io_node(t_io_type type, char *value)
 {
     t_io_node *io_node;
     
@@ -231,11 +229,6 @@ int ft_get_precedence(t_token_type type)
     return (0);
 }
 
-int ft_is_operator(t_token_type type)
-{
-    return (type == T_PIPE || type == T_AND || type == T_OR);
-}
-
 void ft_syntax_error(t_token_type type)
 {
     ft_putstr_fd("minishell: Syntax error near unexpected token `", STDERR_FILENO);
@@ -263,6 +256,19 @@ t_node_type ft_token_to_node_type(t_token_type type)
     else if (type == T_DGREAT)
         return (N_APPEND);
     return (N_CMD);
+}
+
+t_io_type ft_token_to_io_type(t_token_type type)
+{
+    if (type == T_LESS)
+        return (IO_IN);
+    else if (type == T_GREAT)
+        return (IO_OUT);
+    else if (type == T_DLESS)
+        return (IO_HEREDOC);
+    else if (type == T_DGREAT)
+        return (IO_APPEND);
+    return (-1);
 }
 
 t_node *ft_create_cmd_node(void)
@@ -321,7 +327,7 @@ void ft_clear_ast(t_node **ast)
     ft_clear_ast(&(*ast)->left);
     ft_clear_ast(&(*ast)->right);
     if ((*ast)->args)
-        free_args((*ast)->args);
+        free_args((*ast)->expand_args);
     if ((*ast)->io_list)
         free_io_list((*ast)->io_list);
     free(*ast);

@@ -6,7 +6,7 @@
 #    By: hammm <hammm@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/18 12:18:22 by hammm            ###   ########.fr        #
+#    Updated: 2026/02/19 01:25:22 by hammm            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,9 @@ LEXER_FILES = 	$(LEXER_DIR)/lexer.c \
 				$(LEXER_DIR)/test2.c  
 
 PARSER_FILES = 	$(PARSER_DIR)/test1.c \
-				$(PARSER_DIR)/test2.c
+				$(PARSER_DIR)/test2.c \
+				$(PARSER_DIR)/test.c 
+
 EXEC_FILES = 	$(EXEC_DIR)/test.c \
 				$(EXEC_DIR)/test2.c
 UTILS_FILES = 	$(UTILS_DIR)/utils.c \

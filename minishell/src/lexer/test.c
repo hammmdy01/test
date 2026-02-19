@@ -6,7 +6,7 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:03:10 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/12 11:28:35 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/19 01:28:43 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	ft_print_syntax_error(char *token_str)
 	ft_putstr_fd("'\n", 2);
 }
 
-static char	*ft_get_token_str(t_token_type type)
+char	*ft_get_token_str(t_token_type type)
 {
 	if (type == T_PIPE)
 		return ("|");
