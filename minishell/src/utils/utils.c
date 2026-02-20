@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:25:47 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/15 04:26:23 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:22:05 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,77 @@ int	ft_strcmp(char *s1, char *s2)
 		i++;
 	}
 	return (str1[i] - str2[i]);
+}
+
+void	free_split(char **split)
+{
+	int	i;
+
+	if (!split)
+		return ;
+	i = 0;
+	while (split[i])
+	{
+		free(split[i]);
+		i++;
+	}
+	free(split);
+}
+
+int	count_args(char **args)
+{
+	int	count;
+
+	count = 0;
+	if (!args)
+		return (0);
+	while (args[count])
+		count++;
+	return (count);
+}
+
+char	**env_list_to_array(t_env *env_list)
+{
+	char	**env_array;
+	t_env	*current;
+	int		count;
+	int		i;
+	char	*tmp;
+
+	count = 0;
+	current = env_list;
+	while (current)
+	{
+		count++;
+		current = current->next;
+	}
+	env_array = malloc(sizeof(char *) * (count + 1));
+	if (!env_array)
+		return (NULL);
+	current = env_list;
+	i = 0;
+	while (current)
+	{
+		tmp = ft_strjoin(current->key, "=");
+		env_array[i] = ft_strjoin(tmp, current->value);
+		free(tmp);
+		current = current->next;
+		i++;
+	}
+	env_array[i] = NULL;
+	return (env_array);
+}
+
+void	exec_error(char *cmd, char *msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+}
+
+void	exit_with_error(char *msg, int code)
+{
+	ft_putendl_fd(msg, STDERR_FILENO);
+	exit(code);
 }

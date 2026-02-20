@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 02:08:41 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 08:55:35 by hazali           ###   ########.fr       */
+/*   Created: 2026/02/09 09:47:01 by hazali            #+#    #+#             */
+/*   Updated: 2026/02/20 12:41:10 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-int	ft_pwd(void)
+int	ft_execute(t_node *ast, t_minishell *shell)
 {
-	char *cwd;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-		return (1);
-	ft_putstr_fd(cwd, 1);
-	ft_putstr_fd("\n", 1);
-	free(cwd);
+	if (!ast)
+		return (0);
+	if (ast->type == N_PIPE)
+		return (exec_pipe(ast, shell));
+	else if (ast->type == N_CMD)
+		return (exec_simple_cmd(ast, shell));
+	else if (ast->type == N_AND || ast->type == N_OR)
+		return (exec_and_or(ast, shell));
 	return (0);
 }

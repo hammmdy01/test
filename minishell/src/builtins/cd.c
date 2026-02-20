@@ -6,11 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:52 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 09:14:23 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 13:26:30 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static char *ft_get_env_value(t_env *env, char *key)
 {

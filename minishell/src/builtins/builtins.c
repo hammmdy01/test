@@ -6,11 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:35:22 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 08:47:01 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:54:49 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int ft_is_builtin(char *cmd)
 {
@@ -51,4 +51,5 @@ int ft_exec_builtin(char **args, t_minishell *shell)
         return (ft_unset(args, shell));
     if (!ft_strcmp(args[0], "exit"))
         return (ft_exit(args, shell));
+    return (1);
 }

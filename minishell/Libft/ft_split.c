@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/06 13:46:16 by hazali            #+#    #+#             */
-/*   Updated: 2025/12/02 23:26:14 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:53:34 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,25 +96,25 @@ char	**ft_split(char const *str, char charset)
 	return (strs);
 }
 
-#include <stdio.h>
- int	main(void)
- {
-	char	*str = "";
-	char	sep = ' ';
-	char	**words = ft_split(str, sep);
-	int i = 0;
+// #include <stdio.h>
+//  int	main(void)
+//  {
+// 	char	*str = "";
+// 	char	sep = ' ';
+// 	char	**words = ft_split(str, sep);
+// 	int i = 0;
 
-	printf("allocation totale de char* %d \nallocation de char %d\n",
-		ft_len(str, sep), ft_word_len(str +1, sep));
+// 	printf("allocation totale de char* %d \nallocation de char %d\n",
+// 		ft_len(str, sep), ft_word_len(str +1, sep));
 
-	printf("Before: %s\nAfter: \n", str);
-	while (words[i])
-	{
-		printf("index %d %s\n", i, words[i]);
-		//free(words[i]);
-		i++;
+// 	printf("Before: %s\nAfter: \n", str);
+// 	while (words[i])
+// 	{
+// 		printf("index %d %s\n", i, words[i]);
+// 		//free(words[i]);
+// 		i++;
 
-	}
-	printf("le word 0 est %s \n", words[1]);
+// 	}
+// 	printf("le word 0 est %s \n", words[1]);
 
- }
+//  }

@@ -6,11 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:37 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/15 05:09:56 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 13:26:56 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	is_valid_identifier(char *str)
 {

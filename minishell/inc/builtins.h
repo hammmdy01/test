@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:29:19 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 09:33:24 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:54:37 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 typedef struct s_minishell	t_minishell;
 
 
-int	ft_is_builtin(char *cmd);
+int ft_is_builtin(char *cmd);
 
 int	ft_exec_builtin(char **args, t_minishell *shell);
 

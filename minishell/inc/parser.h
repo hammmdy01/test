@@ -6,12 +6,15 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 16:16:57 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:39:07 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "minishell.h"
+# include "lexer.h"
 
 typedef enum e_io_type
 {
@@ -57,7 +60,7 @@ t_node					*ft_parse_expression(t_token **list_token,
 t_node					*ft_parse_parentheses(t_token **list_token);
 t_node					*ft_parse_primary(t_token **list_token);
 t_node					*ft_parse_command(t_token **list_token);
-t_io_node	*ft_create_io_node(t_io_type type, char *value, int fd);
+t_io_node				*ft_create_io_node(t_io_type type, char *value, int fd);
 t_node					*ft_create_cmd_node(void);
 int						ft_parse_word_redir(t_node *node, t_token **list_token);
 int						ft_parse_args(t_node *node, t_token **list_token);
@@ -67,7 +70,6 @@ void					ft_add_io_node(t_io_node **io_list, t_io_node *new_io);
 void					free_args(char **args);
 void					free_io_list(t_io_node *io_list);
 void					ft_clear_ast(t_node **ast);
-char					*ft_get_token_str(t_token_type type);
 int						ft_get_precedence(t_token_type type);
 void					ft_next_token(t_token **list_token);
 t_node					*ft_create_node(t_node_type type, t_node *left,

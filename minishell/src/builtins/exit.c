@@ -6,11 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:34 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/16 08:53:56 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 17:00:49 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 static int	ft_isnumber(char *str)
 {
@@ -37,7 +37,7 @@ static long long	ft_atoll(char *str)
 
 	result = 0;
 	sign = 1;
-	while (ft_is_space(*str) == 1)
+	while (ft_isspace(*str) == 1)
 		str++;
 	if (*str == '-' || *str == '+')
 	{

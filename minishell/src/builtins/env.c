@@ -6,11 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:45 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/15 05:16:44 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 13:26:52 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 int ft_env(t_minishell *shell)
 {

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 16:17:36 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/20 16:30:57 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,73 +107,73 @@
 //     return (0);
 // }
 
-int	main(void)
-{
-	char	*line;
-	t_token	*tokens;
-	t_node	*ast;
+// int	main(void)
+// {
+// 	char	*line;
+// 	t_token	*tokens;
+// 	t_node	*ast;
 
-	printf("╔════════════════════════════════════════════════════════════╗\n");
-	printf("║        🐚 MINISHELL - DEBUG MODE (LEXER + PARSER)        ║\n");
-	printf("╚════════════════════════════════════════════════════════════╝\n");
-	printf("\n💡 Tips:\n");
-	printf("  - Type 'exit' to quit\n");
-	printf("  - Type 'clear' to clear screen\n");
-	printf("  - Empty line = ignored\n\n");
+// 	printf("╔════════════════════════════════════════════════════════════╗\n");
+// 	printf("║        🐚 MINISHELL - DEBUG MODE (LEXER + PARSER)        ║\n");
+// 	printf("╚════════════════════════════════════════════════════════════╝\n");
+// 	printf("\n💡 Tips:\n");
+// 	printf("  - Type 'exit' to quit\n");
+// 	printf("  - Type 'clear' to clear screen\n");
+// 	printf("  - Empty line = ignored\n\n");
 	
-	while (1)
-	{
-		line = readline("minishell> ");
-		if (!line)
-		{
-			printf("exit\n");
-			break ;
-		}
-		if (!*line)
-		{
-			free(line);
-			continue ;
-		}
-		add_history(line);
+// 	while (1)
+// 	{
+// 		line = readline("minishell> ");
+// 		if (!line)
+// 		{
+// 			printf("exit\n");
+// 			break ;
+// 		}
+// 		if (!*line)
+// 		{
+// 			free(line);
+// 			continue ;
+// 		}
+// 		add_history(line);
 		
-		// === LEXER ===
-		printf("\n┌─── 📋 LEXER OUTPUT ───────────────────────────────────────\n");
-		tokens = ft_lexer(line);
-		if (!tokens)
-		{
-			printf("│ ❌ Syntax error detected in lexer\n");
-			printf("└───────────────────────────────────────────────────────────\n\n");
-			free(line);
-			continue ;
-		}
-		print_tokens(tokens);
-		printf("└───────────────────────────────────────────────────────────\n");
+// 		// === LEXER ===
+// 		printf("\n┌─── 📋 LEXER OUTPUT ───────────────────────────────────────\n");
+// 		tokens = ft_lexer(line);
+// 		if (!tokens)
+// 		{
+// 			printf("│ ❌ Syntax error detected in lexer\n");
+// 			printf("└───────────────────────────────────────────────────────────\n\n");
+// 			free(line);
+// 			continue ;
+// 		}
+// 		print_tokens(tokens);
+// 		printf("└───────────────────────────────────────────────────────────\n");
 		
-		// === PARSER ===
-		printf("\n┌─── 🌳 PARSER OUTPUT ──────────────────────────────────────\n");
-		ast = ft_parsing(tokens);
-		if (!ast)
-		{
-			printf("│ ❌ Parsing failed\n");
-			printf("└───────────────────────────────────────────────────────────\n\n");
-			ft_clear_all_token(&tokens);
-			free(line);
-			continue ;
-		}
-		printf("│ ✅ Parsing successful!\n");
-		printf("└───────────────────────────────────────────────────────────\n");
+// 		// === PARSER ===
+// 		printf("\n┌─── 🌳 PARSER OUTPUT ──────────────────────────────────────\n");
+// 		ast = ft_parsing(tokens);
+// 		if (!ast)
+// 		{
+// 			printf("│ ❌ Parsing failed\n");
+// 			printf("└───────────────────────────────────────────────────────────\n\n");
+// 			ft_clear_all_token(&tokens);
+// 			free(line);
+// 			continue ;
+// 		}
+// 		printf("│ ✅ Parsing successful!\n");
+// 		printf("└───────────────────────────────────────────────────────────\n");
 		
-		// === AST DEBUG ===
-		ft_print_ast(ast);
+// 		// === AST DEBUG ===
+// 		ft_print_ast(ast);
 		
-		// Cleanup
-		ft_clear_all_token(&tokens);
-		ft_clear_ast(&ast);
-		free(line);
-	}
-	rl_clear_history();
-	return (0);
-}
+// 		// Cleanup
+// 		ft_clear_all_token(&tokens);
+// 		ft_clear_ast(&ast);
+// 		free(line);
+// 	}
+// 	rl_clear_history();
+// 	return (0);
+// }
 
 // void test_basic_redirections(void)
 // {
@@ -367,3 +367,70 @@ int	main(void)
     
 //     return (0);
 // }
+
+int main(void)
+{
+	char        *line;
+	t_token     *tokens;
+	t_node      *ast;
+	t_minishell shell;
+	
+	// Initialiser le shell
+	shell.exit_s = 0;
+	shell.stdin = dup(STDIN_FILENO);
+	shell.stdout = dup(STDOUT_FILENO);
+	shell.environ = __environ;  // ou récupérer depuis main(int ac, char **av, char **env)
+	shell.envlst = NULL;  // TODO: initialiser la liste d'environnement
+	
+	printf("╔════════════════════════════════════════════════════════════╗\n");
+	printf("║           🐚 MINISHELL - FULL VERSION                    ║\n");
+	printf("╚════════════════════════════════════════════════════════════╝\n\n");
+	
+	while (1)
+	{
+		line = readline("minishell> ");
+		if (!line)
+		{
+			printf("exit\n");
+			break;
+		}
+		if (!*line)
+		{
+			free(line);
+			continue;
+		}
+		add_history(line);
+		
+		// LEXER
+		tokens = ft_lexer(line);
+		if (!tokens)
+		{
+			printf("❌ Syntax error in lexer\n");
+			free(line);
+			continue;
+		}
+		
+		// PARSER
+		ast = ft_parsing(tokens);
+		if (!ast)
+		{
+			printf("❌ Parsing failed\n");
+			ft_clear_all_token(&tokens);
+			free(line);
+			continue;
+		}
+		
+		// EXECUTION
+		shell.exit_s = ft_execute(ast, &shell);
+		
+		// Cleanup
+		ft_clear_all_token(&tokens);
+		ft_clear_ast(&ast);
+		free(line);
+	}
+	
+	close(shell.stdin);
+	close(shell.stdout);
+	rl_clear_history();
+	return (shell.exit_s);
+}

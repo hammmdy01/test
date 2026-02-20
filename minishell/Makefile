@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hammm <hammm@student.42.fr>                +#+  +:+       +#+         #
+#    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/19 01:25:22 by hammm            ###   ########.fr        #
+#    Updated: 2026/02/20 17:00:29 by hazali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ LEXER_DIR = $(SRC_DIR)/lexer
 PARSER_DIR = $(SRC_DIR)/parser
 EXEC_DIR = $(SRC_DIR)/exec
 UTILS_DIR = $(SRC_DIR)/utils
+BUILTINS_DIR = $(SRC_DIR)/builtins
 
 LEXER_FILES = 	$(LEXER_DIR)/lexer.c \
 				$(LEXER_DIR)/lexer2.c \
@@ -35,13 +36,27 @@ PARSER_FILES = 	$(PARSER_DIR)/test1.c \
 				$(PARSER_DIR)/test2.c \
 				$(PARSER_DIR)/test.c 
 
-EXEC_FILES = 	$(EXEC_DIR)/test.c \
-				$(EXEC_DIR)/test2.c
+EXEC_FILES = 	$(EXEC_DIR)/exec.c \
+				$(EXEC_DIR)/exec_and_or.c \
+				$(EXEC_DIR)/exec_cmd.c \
+				$(EXEC_DIR)/exec_pipe.c \
+				$(EXEC_DIR)/get_path.c \
+				$(EXEC_DIR)/redir.c \
+				$(EXEC_DIR)/hd.c 
 UTILS_FILES = 	$(UTILS_DIR)/utils.c \
 				$(UTILS_DIR)/test2.c
 
+BUILTINS_FILES = 	$(BUILTINS_DIR)/builtins.c \
+					$(BUILTINS_DIR)/cd.c \
+					$(BUILTINS_DIR)/echo.c \
+					$(BUILTINS_DIR)/env.c \
+					$(BUILTINS_DIR)/exit.c \
+					$(BUILTINS_DIR)/export.c \
+					$(BUILTINS_DIR)/pwd.c \
+					$(BUILTINS_DIR)/unset.c 
+
 SRC = 	$(SRC_DIR)/main.c $(LEXER_FILES) $(PARSER_FILES) \
-		$(EXEC_FILES) $(UTILS_FILES)
+		$(EXEC_FILES) $(UTILS_FILES) $(BUILTINS_FILES)
 OBJ =	$(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all : $(NAME)
