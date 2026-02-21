@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:30:57 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/21 17:41:40 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+#include "../inc/utils.h"
+#include "../inc/lexer.h"
 
 // int			g_signum;
 
@@ -380,7 +382,7 @@ int main(void)
 	shell.stdin = dup(STDIN_FILENO);
 	shell.stdout = dup(STDOUT_FILENO);
 	shell.environ = __environ;  // ou récupérer depuis main(int ac, char **av, char **env)
-	shell.envlst = NULL;  // TODO: initialiser la liste d'environnement
+	shell.envlst = init_env_list(shell.environ);  // TODO: initialiser la liste d'environnement
 	
 	printf("╔════════════════════════════════════════════════════════════╗\n");
 	printf("║           🐚 MINISHELL - FULL VERSION                    ║\n");

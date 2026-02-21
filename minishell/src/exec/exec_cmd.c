@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:56 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:58:45 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/21 17:31:29 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,6 @@ int exec_extrn_cmd(t_node *cmd_node, t_minishell *shell)
     }
     waitpid(pid, &status, 0);
     if (WIFEXITED(status))
-        return (WIFEXITED(status));
+        return (WEXITSTATUS(status));
     return (1);
 }

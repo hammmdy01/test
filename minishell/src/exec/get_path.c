@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:04 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:52:18 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/21 17:31:56 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK))
+		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
 		return (NULL);
 	}
