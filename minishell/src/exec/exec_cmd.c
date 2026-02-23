@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:56 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/21 17:31:29 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/23 21:29:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 int	exec_simple_cmd(t_node *cmd_node, t_minishell *shell)
 {
+    
 	if (!cmd_node || !cmd_node->expand_args || !cmd_node->expand_args[0])
 		return (0);
 	if (ft_is_builtin(cmd_node->expand_args[0]))

@@ -6,13 +6,13 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 16:41:02 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/23 21:27:22 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_node	*ft_parsing(t_token *list_token)
+t_node	*ft_parsing(t_token *list_token, t_minishell *shell)
 {
 	t_token	*curren_list;
 	t_node	*ast;
@@ -20,7 +20,7 @@ t_node	*ft_parsing(t_token *list_token)
 	curren_list = list_token;
 	if (!curren_list)
 		return (NULL);
-	ast = ft_parse_expression(&curren_list, 0);
+	ast = ft_parse_expression(&curren_list, 0, shell);
 	if (!ast || curren_list)
 	{
 		ft_clear_ast(&ast);
@@ -29,7 +29,7 @@ t_node	*ft_parsing(t_token *list_token)
 	return (ast);
 }
 
-t_node	*ft_parse_expression(t_token **list_token, int precedence)
+t_node	*ft_parse_expression(t_token **list_token, int precedence, t_minishell *shell)
 {
 	t_node			*left;
 	t_node			*right;
@@ -38,7 +38,7 @@ t_node	*ft_parse_expression(t_token **list_token, int precedence)
 
 	if (!*list_token)
 		return (NULL);
-	left = ft_parse_primary(list_token);
+	left = ft_parse_primary(list_token, shell);
 	if (!left)
 		return (NULL);
 	while (*list_token && ft_is_operator((*list_token)->type)
@@ -47,7 +47,7 @@ t_node	*ft_parse_expression(t_token **list_token, int precedence)
 		type_operator = (*list_token)->type;
 		curr_precedence = ft_get_precedence(type_operator);
 		ft_next_token(list_token);
-		right = ft_parse_expression(list_token, curr_precedence + 1);
+		right = ft_parse_expression(list_token, curr_precedence + 1, shell);
 		if (!right)
 			return (ft_clear_ast(&left), NULL);
 		left = ft_create_node(ft_token_to_node_type(type_operator), left,
@@ -57,12 +57,12 @@ t_node	*ft_parse_expression(t_token **list_token, int precedence)
 	}
 	return (left);
 }
-t_node	*ft_parse_parentheses(t_token **list_token)
+t_node	*ft_parse_parentheses(t_token **list_token, t_minishell *shell)
 {
 	t_node	*node;
 
 	ft_next_token(list_token);
-	node = ft_parse_expression(list_token, 0);
+	node = ft_parse_expression(list_token, 0, shell);
 	if (!node || ((*list_token) && (*list_token)->type != T_CLOSE_PARENT))
 	{
 		ft_putendl_fd("minishell: Syntax error: expected ')'", STDERR_FILENO);
@@ -73,7 +73,7 @@ t_node	*ft_parse_parentheses(t_token **list_token)
 	return (node);
 }
 
-t_node	*ft_parse_primary(t_token **list_token)
+t_node	*ft_parse_primary(t_token **list_token, t_minishell *shell)
 {
 	if (!*list_token)
 	{
@@ -83,18 +83,18 @@ t_node	*ft_parse_primary(t_token **list_token)
 	}
 	if ((*list_token)->type == T_OPEN_PARENT)
 	{
-		return (ft_parse_parentheses(list_token));
+		return (ft_parse_parentheses(list_token, shell));
 	}
 	else if ((*list_token)->type == T_WORD
 		|| ft_is_redirection((*list_token)->type))
 	{
-		return (ft_parse_command(list_token));
+		return (ft_parse_command(list_token, shell));
 	}
 	return (ft_putendl_fd("minishell: Syntax error: unexpected token",
 			STDERR_FILENO), NULL);
 }
 
-t_node	*ft_parse_command(t_token **list_token)
+t_node	*ft_parse_command(t_token **list_token, t_minishell *shell)
 {
 	t_node	*node;
 
@@ -104,7 +104,7 @@ t_node	*ft_parse_command(t_token **list_token)
 	while (*list_token && ((*list_token)->type == T_WORD
 			|| ft_is_redirection((*list_token)->type)))
 	{
-		if (!ft_parse_word_redir(node, list_token))
+		if (!ft_parse_word_redir(node, list_token, shell))
 		{
 			ft_clear_ast(&node);
 			return (NULL);
@@ -116,7 +116,7 @@ t_node	*ft_parse_command(t_token **list_token)
 	return (node);
 }
 
-int	ft_parse_word_redir(t_node *node, t_token **list_token)
+int	ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell)
 {
 	if (ft_is_redirection((*list_token)->type))
 	{
@@ -125,7 +125,7 @@ int	ft_parse_word_redir(t_node *node, t_token **list_token)
 	}
 	else
 	{
-		if (!ft_parse_args(node, list_token))
+		if (!ft_parse_args(node, list_token, shell))
 			return (0);
 	}
 	return (1);
@@ -144,32 +144,37 @@ int	ft_count_args(t_token *list_token)
 	return (count);
 }
 
-int	ft_parse_args(t_node *node, t_token **list_token)
+int	ft_parse_args(t_node *node, t_token **list_token, t_minishell *shell)
 {
 	int	arg_count;
 	int	i;
+	char **tmp_arg;
 
 	arg_count = ft_count_args(*list_token);
 	if (arg_count == 0)
 		return (1);
-	node->expand_args = (char **)malloc(sizeof(char *) * (arg_count + 1));
-	if (!node->expand_args)
+	tmp_arg = (char **)malloc(sizeof(char *) * (arg_count + 1));
+	if (!tmp_arg)
 		return (0);
 	i = 0;
 	while (*list_token && (*list_token)->type == T_WORD)
 	{
-		node->expand_args[i] = ft_strdup((*list_token)->value);
-		if (!node->expand_args[i])
+		tmp_arg[i] = ft_strdup((*list_token)->value);
+		if (!tmp_arg[i])
 		{
 			while (i > 0)
-				free(node->expand_args[--i]);
-			free(node->expand_args);
+				free(tmp_arg[--i]);
+			free(tmp_arg);
 			return (0);
 		}
 		i++;
 		ft_next_token(list_token);
 	}
-	node->expand_args[i] = NULL;
+	tmp_arg[i] = NULL;
+	node->expand_args = expand_args(tmp_arg, shell);
+	free_split(tmp_arg);
+	if (!node->expand_args)
+		return (0);
 	return (1);
 }
 

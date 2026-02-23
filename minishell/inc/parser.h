@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:39:07 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/23 21:28:13 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ typedef struct s_node
 	struct s_node		*right;
 }						t_node;
 
-t_node					*ft_parsing(t_token *list_token);
+t_node					*ft_parsing(t_token *list_token, t_minishell *shell);
 t_node					*ft_parse_expression(t_token **list_token,
-							int precedence);
-t_node					*ft_parse_parentheses(t_token **list_token);
-t_node					*ft_parse_primary(t_token **list_token);
-t_node					*ft_parse_command(t_token **list_token);
+							int precedence, t_minishell *shell);
+t_node					*ft_parse_parentheses(t_token **list_token, t_minishell *shell);
+t_node					*ft_parse_primary(t_token **list_token, t_minishell *shell);
+t_node					*ft_parse_command(t_token **list_token, t_minishell *shell);
 t_io_node				*ft_create_io_node(t_io_type type, char *value, int fd);
 t_node					*ft_create_cmd_node(void);
-int						ft_parse_word_redir(t_node *node, t_token **list_token);
-int						ft_parse_args(t_node *node, t_token **list_token);
+int						ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell);
+int						ft_parse_args(t_node *node, t_token **list_token, t_minishell *shell);
 int						ft_count_args(t_token *list_token);
 t_node_type				ft_token_to_node_type(t_token_type type);
 void					ft_add_io_node(t_io_node **io_list, t_io_node *new_io);

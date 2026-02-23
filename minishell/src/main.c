@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/21 17:47:35 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/23 21:30:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -409,7 +409,7 @@ int main(void)
 		}
 		
 		// PARSER
-		ast = ft_parsing(tokens);
+		ast = ft_parsing(tokens, &shell);
 		if (!ast)
 		{
 			printf("❌ Parsing failed\n");
