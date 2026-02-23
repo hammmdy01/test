@@ -6,7 +6,7 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/21 17:41:40 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/21 17:47:35 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,10 +383,6 @@ int main(void)
 	shell.stdout = dup(STDOUT_FILENO);
 	shell.environ = __environ;  // ou récupérer depuis main(int ac, char **av, char **env)
 	shell.envlst = init_env_list(shell.environ);  // TODO: initialiser la liste d'environnement
-	
-	printf("╔════════════════════════════════════════════════════════════╗\n");
-	printf("║           🐚 MINISHELL - FULL VERSION                    ║\n");
-	printf("╚════════════════════════════════════════════════════════════╝\n\n");
 	
 	while (1)
 	{
