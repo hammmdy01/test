@@ -6,7 +6,7 @@
 /*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:44 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/23 12:39:28 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/23 12:50:31 by hammm            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char *get_var_value(char *var_name, t_minishell *shell)
     tmp = shell->envlst;
     while (tmp)
     {        if (ft_strcmp(tmp->key, var_name) == 0)
-            return (tmp->value);
+            return (ft_strdup(tmp->value));
         tmp = tmp->next;
     }
-    return ("");
+    return (ft_strdup(""));
 }
 
 int is_special_char(char c)
@@ -54,7 +54,7 @@ char *extract_var_name(char *str, int *index)
         (*index)++;
     len = *index - start;
     if (len == 0)
-        return ("");
+        return (ft_strdup("?"));
     var_name = ft_substr(str, start, len);
     return (var_name);
 }
@@ -114,6 +114,7 @@ char *expand_variables(char *input, t_minishell *shell)
             tmp = result;
             result = ft_strjoin_char(result, input[i]);
             free(tmp);
+            free(var_value);
             i++;
         }
     }
