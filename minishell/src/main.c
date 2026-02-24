@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 06:42:57 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:10:24 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,6 @@ int main(void)
 			free(line);
 			continue;
 		}
-		
 		// PARSER
 		ast = ft_parsing(tokens, &shell);
 		if (!ast)

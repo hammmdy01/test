@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:08 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:51:16 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:08:14 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,6 @@ int	exec_pipe(t_node *pipe_node, t_minishell *shell)
 	waitpid(pid1, &status, 0);
 	waitpid(pid2, &status, 0);
 	if(WIFEXITED(status))
-        exit = WIFEXITED(status);
+        exit = WEXITSTATUS(status);
     return (exit);
 }
