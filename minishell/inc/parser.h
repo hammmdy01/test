@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/23 21:28:13 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:46:16 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct s_node
 {
 	t_node_type			type;
 	t_io_node			*io_list;
-	char				*args;
+	char				**args;
 	char				**expand_args;
 	struct s_node		*left;
 	struct s_node		*right;

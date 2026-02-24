@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 06:46:34 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:45:13 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,41 +94,129 @@ t_node	*ft_parse_primary(t_token **list_token, t_minishell *shell)
 			STDERR_FILENO), NULL);
 }
 
-t_node	*ft_parse_command(t_token **list_token, t_minishell *shell)
-{
-	t_node	*node;
+// t_node	*ft_parse_command(t_token **list_token, t_minishell *shell)   VERSION AVTN CORRECTION POUR LES REDIRECTION
+// {
+// 	t_node	*node;
 
-	node = ft_create_cmd_node();
-	if (!node)
-		return (NULL);
-	while (*list_token && ((*list_token)->type == T_WORD
-			|| ft_is_redirection((*list_token)->type)))
-	{
-		if (!ft_parse_word_redir(node, list_token, shell))
-		{
-			ft_clear_ast(&node);
-			return (NULL);
-		}
-		if (*list_token && ((*list_token)->type == T_WORD || ft_is_redirection((*list_token)->type)))
-			continue ;
-		break ;
-	}
-	return (node);
+// 	node = ft_create_cmd_node();
+// 	if (!node)
+// 		return (NULL);
+// 	while (*list_token && ((*list_token)->type == T_WORD
+// 			|| ft_is_redirection((*list_token)->type)))
+// 	{
+// 		if (!ft_parse_word_redir(node, list_token, shell))
+// 		{
+// 			ft_clear_ast(&node);
+// 			return (NULL);
+// 		}
+// 		if (*list_token && ((*list_token)->type == T_WORD || ft_is_redirection((*list_token)->type)))
+// 			continue ;
+// 		break ;
+// 	}
+// 	return (node);
+// }
+
+// int	ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell)
+// {
+// 	if (ft_is_redirection((*list_token)->type))
+// 	{
+// 		if (!ft_parse_io_redir(node, list_token))
+// 			return (0);
+// 	}
+// 	else
+// 	{
+// 		if (!ft_parse_args(node, list_token, shell))
+// 			return (0);
+// 	}
+// 	return (1);
+// }
+
+int ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell)
+{
+    char **tmp_raw_args;
+    int count;
+    int i;
+
+    (void)shell;  // On expand à la fin
+    
+    if (ft_is_redirection((*list_token)->type))
+    {
+        if (!ft_parse_io_redir(node, list_token))
+            return (0);
+    }
+    else  // T_WORD
+    {
+        // Compter les args existants
+        count = 0;
+        if (node->args)  // node->args stocke les raw args
+        {
+            while (node->args[count])
+                count++;
+        }
+
+        // Allouer pour un arg de plus
+        tmp_raw_args = malloc(sizeof(char *) * (count + 2));
+        if (!tmp_raw_args)
+            return (0);
+
+        // Copier les anciens
+        i = 0;
+        while (i < count)
+        {
+            tmp_raw_args[i] = node->args[i];
+            i++;
+        }
+
+        // Ajouter le nouveau (RAW, pas expand)
+        tmp_raw_args[i] = ft_strdup((*list_token)->value);
+        if (!tmp_raw_args[i])
+        {
+            free(tmp_raw_args);
+            return (0);
+        }
+        tmp_raw_args[i + 1] = NULL;
+
+        // Remplacer
+        if (node->args)
+            free(node->args);
+        node->args = tmp_raw_args;
+
+        ft_next_token(list_token);
+    }
+    return (1);
 }
 
-int	ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell)
+t_node *ft_parse_command(t_token **list_token, t_minishell *shell)
 {
-	if (ft_is_redirection((*list_token)->type))
-	{
-		if (!ft_parse_io_redir(node, list_token))
-			return (0);
-	}
-	else
-	{
-		if (!ft_parse_args(node, list_token, shell))
-			return (0);
-	}
-	return (1);
+    t_node *node;
+
+    node = ft_create_cmd_node();
+    if (!node)
+        return (NULL);
+    
+    // Parse tous les args et redirections
+    while (*list_token && ((*list_token)->type == T_WORD
+            || ft_is_redirection((*list_token)->type)))
+    {
+        if (!ft_parse_word_redir(node, list_token, shell))
+        {
+            ft_clear_ast(&node);
+            return (NULL);
+        }
+    }
+
+    // ✅ MAINTENANT expand tous les args d'un coup
+    if (node->args)
+    {
+        node->expand_args = expand_args(node->args, shell);
+        if (!node->expand_args)
+        {
+            ft_clear_ast(&node);
+            return (NULL);
+        }
+    }
+
+    return (node);
 }
 
 int	ft_count_args(t_token *list_token)
