@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:34 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 17:00:49 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:21:47 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ static int	ft_is_too_big(char *str)
 	return (0);
 }
 
-static void	ft_error(char *arg, char *str, int error_code)
-{
-	ft_putstr_fd("exit\nminishell: exit: ", 2);
-	if (error_code == 1)
-		ft_putstr_fd(arg, 2);
-	ft_putstr_fd(str, 2);
-}
+// static void	ft_error(char *arg, char *str, int error_code)
+// {
+// 	ft_putstr_fd("exit\nminishell: exit: ", 2);
+// 	if (error_code == 1)
+// 		ft_putstr_fd(arg, 2);
+// 	ft_putstr_fd(str, 2);
+// }
 
 int	ft_exit(char **args, t_minishell *shell)
 {
@@ -92,15 +92,15 @@ int	ft_exit(char **args, t_minishell *shell)
 	}
 	if (!ft_isnumber(args[1]) || ft_is_too_big(args[1]))
 	{
-		ft_error(args[1], ": numeric argument required\n", 1);
+		ft_putstr_fd(" numeric argument required\n", 2);
 		exit(2);
 	}
 	if (args[2])
 	{
-		ft_putstr_fd("exit\nminishell: exit: too many arguments\n", 2);
+		ft_putstr_fd(" too many arguments\n", 2);
 		return (1);
 	}
 	exit_code = (unsigned char)ft_atoll(args[1]);
-	ft_putstr_fd("exit\n", 2);
+	// ft_putstr_fd("exit\n", 2);
 	exit(exit_code);
 }
