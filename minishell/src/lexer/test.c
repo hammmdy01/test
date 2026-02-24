@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:03:10 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/19 15:02:14 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 07:03:29 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,12 @@ static int	ft_check_last_token(t_token *tokens)
 	curr = tokens;
 	while (curr->next)
 		curr = curr->next;
-	if (ft_is_operator(curr->type) || ft_is_redirection(curr->type))
+	if (ft_is_operator(curr->type))
+	{
+		ft_print_syntax_error(ft_get_token_str(curr->type));
+		return (0);
+	}
+	if (ft_is_redirection(curr->type))
 	{
 		ft_print_syntax_error(NULL);
 		return (0);
