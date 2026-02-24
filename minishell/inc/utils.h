@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:26:54 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/23 12:38:49 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/24 06:31:44 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char *extract_var_name(char *str, int *index);
 char *ft_strjoin_char(char *s, char c);
 char **expand_args(char **args, t_minishell *shell);
 
+char *remove_quotes(char *str);
 
 
 // Debug mode toggle

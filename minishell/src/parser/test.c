@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/23 21:27:22 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 06:33:04 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,12 +240,14 @@ t_node	*ft_create_node(t_node_type type, t_node *left, t_node *right)
 t_io_node	*ft_create_io_node(t_io_type type, char *value, int fd)
 {
 	t_io_node	*io_node;
+	char	*name_file;
 
 	io_node = (t_io_node *)malloc(sizeof(t_io_node));
 	if (!io_node)
 		return (NULL);
+    name_file = remove_quotes(value);
 	io_node->type = type;
-    io_node->value = ft_strdup(value);
+    io_node->value = name_file;
 	io_node->fd = fd;
 	if (!io_node->value)
 	{

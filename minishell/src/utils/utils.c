@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:25:47 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/22 14:48:27 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/24 06:31:36 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,4 +139,33 @@ t_env *init_env_list(char **envp)
         i++;
     }
     return (env_list);
+}
+
+char *remove_quotes(char *str)
+{
+    char *result;
+    char *dst;
+    char quote;
+    int i;
+
+    if (!str)
+        return (NULL);
+    result = malloc(ft_strlen(str) + 1);
+    if (!result)
+        return (NULL);
+    dst = result;
+    i = 0;
+    quote = 0;
+    while (str[i])
+    {
+        if ((str[i] == '"' || str[i] == '\'') && !quote)
+            quote = str[i];
+        else if (str[i] == quote)
+            quote = 0;
+        else
+            *dst++ = str[i];
+        i++;
+    }
+    *dst = '\0';
+    return (result);
 }
