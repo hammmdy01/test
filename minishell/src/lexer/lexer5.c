@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 04:22:30 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:23:46 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:37:46 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	print_tokens(t_token *tokens)
 {
 	t_token				*curr;
 	static const char	*type_names[] = {"WORD", "LESS", "GREAT", "DLESS",
-			"DGREAT", "PIPE", "OPEN_PARENT", "CLOSE_PARENT", "AND", "OR"};
+		"DGREAT", "PIPE", "OPEN_PARENT", "CLOSE_PARENT", "AND", "OR"};
 
 	curr = tokens;
 	printf("=== TOKENS ===\n");

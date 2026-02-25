@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:44:32 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/25 04:42:39 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:53:28 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,53 +33,49 @@
 // 	printf("\n");
 // }
 
-int	ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell)
+int	ft_parse_word_redir(t_node *node, t_token **list_token)
 {
 	char	**tmp_raw_args;
 	int		count;
 	int		i;
 
-	(void)shell; // On expand à la fin
 	if (ft_is_redirection((*list_token)->type))
 	{
 		if (!ft_parse_io_redir(node, list_token))
 			return (0);
 	}
-	else // T_WORD
+	else
 	{
-		// Compter les args existants
-		count = 0;
-		if (node->args) // node->args stocke les raw args
-		{
-			while (node->args[count])
-				count++;
-		}
-		// Allouer pour un arg de plus
-		tmp_raw_args = malloc(sizeof(char *) * (count + 2));
-		if (!tmp_raw_args)
+		if (!add_word_to_node(node, *list_token))
 			return (0);
-		// Copier les anciens
-		i = 0;
-		while (i < count)
-		{
-			tmp_raw_args[i] = node->args[i];
-			i++;
-		}
-		// Ajouter le nouveau (RAW, pas expand)
-		tmp_raw_args[i] = ft_strdup((*list_token)->value);
-		if (!tmp_raw_args[i])
-		{
-			free(tmp_raw_args);
-			return (0);
-		}
-		tmp_raw_args[i + 1] = NULL;
-		// Remplacer
-		if (node->args)
-			free(node->args);
-		node->args = tmp_raw_args;
 		ft_next_token(list_token);
 	}
 	return (1);
+}
+
+int	add_word_node(t_node *node, t_token *token)
+{
+	char	**tmp_raw_args;
+	int		count;
+	int		i;
+
+	count = 0;
+	if (node->args)
+		while (node->args[count])
+			count++;
+	tmp_raw_args = malloc(sizeof(char *) * (count + 2));
+	if (!tmp_raw_args)
+		return (0);
+	i = -1;
+	while (++i < count)
+		tmp_raw_args[i] = node->args[i];
+	tmp_raw_args[i] = ft_strdup(token->value);
+	if (!tmp_raw_args[i])
+		return (free(tmp_raw_args), 0);
+	tmp_raw_args[i + 1] = NULL;
+	if (node->args)
+		free(node->args);
+	node->args = tmp_raw_args;
 }
 
 int	ft_count_args(t_token *list_token)

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:53 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:23:43 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:35:29 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ t_token	*ft_lexer(char *line)
 
 int	process_token(char **line, t_token **token_list)
 {
-    if (!ft_strncmp(*line, "<<", 2) || !ft_strncmp(*line, ">>", 2)
-        || !ft_strncmp(*line, "&&", 2) || !ft_strncmp(*line, "||", 2))
-        return (ft_handle_separator(line, token_list));
-    if (ft_is_fd_redirection(*line))
-        return (ft_handle_fd_redirection(line, token_list));
-    if (**line == '<' || **line == '>' || **line == '|'
-        || **line == '(' || **line == ')')
-        return (ft_handle_separator(line, token_list));
-    return (ft_append_word(line, token_list));
+	if (!ft_strncmp(*line, "<<", 2) || !ft_strncmp(*line, ">>", 2)
+		|| !ft_strncmp(*line, "&&", 2) || !ft_strncmp(*line, "||", 2))
+		return (ft_handle_separator(line, token_list));
+	if (ft_is_fd_redirection(*line))
+		return (ft_handle_fd_redirection(line, token_list));
+	if (**line == '<' || **line == '>' || **line == '|' || **line == '('
+		|| **line == ')')
+		return (ft_handle_separator(line, token_list));
+	return (ft_append_word(line, token_list));
 }
 
 int	ft_is_fd_redirection(char *line)
@@ -90,4 +90,3 @@ int	ft_handle_separator(char **ptr_line, t_token **token_list)
 	else
 		return (ft_append_separator(T_PIPE, ptr_line, token_list));
 }
-

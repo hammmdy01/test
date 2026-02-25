@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:31:26 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:43:59 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ t_node					*ft_parse_command(t_token **list_token,
 							t_minishell *shell);
 t_io_node				*ft_create_io_node(t_io_type type, char *value, int fd);
 t_node					*ft_create_cmd_node(void);
-int						ft_parse_word_redir(t_node *node, t_token **list_token,
-							t_minishell *shell);
+int						ft_parse_word_redir(t_node *node, t_token **list_token);
+
 int						ft_parse_args(t_node *node, t_token **list_token,
 							t_minishell *shell);
 int						ft_count_args(t_token *list_token);

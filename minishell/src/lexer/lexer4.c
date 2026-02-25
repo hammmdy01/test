@@ -6,12 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:03:10 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/25 04:23:06 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:37:23 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static int	ft_check_last_token(t_token *tokens)
 {
@@ -42,11 +41,6 @@ static int	ft_check_consecutive_tokens(t_token *curr)
 		ft_print_syntax_error(ft_get_token_str(curr->next->type));
 		return (0);
 	}
-	// if (ft_is_operator(curr->type) && ft_is_redirection(curr->next->type))
-	// {
-	// 	ft_print_syntax_error(ft_get_token_str(curr->next->type));
-	// 	return (0);
-	// }
 	if (ft_is_redirection(curr->type))
 	{
 		if (curr->next->type != T_WORD)
@@ -66,6 +60,7 @@ static int	check_open_parent(t_token *curr)
 		return (ft_print_syntax_error(ft_get_token_str(curr->next->type)), 0);
 	return (1);
 }
+
 static int	ft_check_parentheses(t_token *tokens)
 {
 	t_token	*curr;

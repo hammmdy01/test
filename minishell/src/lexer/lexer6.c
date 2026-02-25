@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 04:23:08 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:28:21 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:38:00 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	ft_is_operator(t_token_type type)
 		return (1);
 	return (0);
 }
+
 int	ft_is_redirection(t_token_type type)
 {
 	if (type == T_LESS || type == T_GREAT || type == T_DLESS

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:22:08 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:35:58 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_handle_fd_redirection(char **line, t_token **list)
 	return (1);
 }
 
-void advance_redir_line(char **line)
+void	advance_redir_line(char **line)
 {
 	if (!ft_strncmp(*line, ">>", 2) || !ft_strncmp(*line, "<<", 2))
 		*line += 2;
@@ -65,7 +65,7 @@ t_token	*ft_new_token(char *value, t_token_type type)
 		return (NULL);
 	new_token->value = value;
 	new_token->type = type;
-	new_token->fd = -1; // pas sur sur
+	new_token->fd = -1;
 	return (new_token);
 }
 
@@ -86,4 +86,3 @@ void	ft_add_token(t_token **lst, t_token *new_token)
 	current->next = new_token;
 	new_token->prev = current;
 }
-

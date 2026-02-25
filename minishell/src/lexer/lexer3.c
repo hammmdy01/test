@@ -6,33 +6,33 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 15:40:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:22:11 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:37:09 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int ft_is_quote(char c)
+int	ft_is_quote(char c)
 {
 	if (c == '\'' || c == '"')
 		return (1);
 	return (0);
 }
 
-int ft_skip_quotes(char *line, size_t *i)
+int	ft_skip_quotes(char *line, size_t *i)
 {
-    char quote;
+	char	quote;
 
-    quote = line[*i];
-    if (ft_strchr(line + *i + 1, quote))
-    {
-        (*i)++;
-        while (line[*i] != quote)
+	quote = line[*i];
+	if (ft_strchr(line + *i + 1, quote))
+	{
+		(*i)++;
+		while (line[*i] != quote)
 			(*i)++;
 		(*i)++;
-        return (1);
-    }
-    return(0);
+		return (1);
+	}
+	return (0);
 }
 
 void	ft_print_quote_err(char c)
@@ -40,7 +40,6 @@ void	ft_print_quote_err(char c)
 	ft_putstr_fd("minishell: unexpected EOF while looking for matching `", 2);
 	ft_putchar_fd(c, 2);
 	ft_putstr_fd("'\n", 2);
-	//minishell.exit_s = 258; Ajouter code d erreur
 }
 
 void	ft_clear_all_token(t_token **lst)

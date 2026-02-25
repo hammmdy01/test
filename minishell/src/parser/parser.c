@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:40 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:43:48 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:44:02 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ t_node	*ft_parse_expression(t_token **list_token, int precedence,
 	}
 	return (left);
 }
+
 t_node	*ft_parse_parentheses(t_token **list_token, t_minishell *shell)
 {
 	t_node	*node;
@@ -145,7 +146,7 @@ t_node	*ft_parse_command(t_token **list_token, t_minishell *shell)
 	while (*list_token && ((*list_token)->type == T_WORD
 			|| ft_is_redirection((*list_token)->type)))
 	{
-		if (!ft_parse_word_redir(node, list_token, shell))
+		if (!ft_parse_word_redir(node, list_token))
 		{
 			ft_clear_ast(&node);
 			return (NULL);
@@ -175,8 +176,8 @@ t_node	*ft_parse_command(t_token **list_token, t_minishell *shell)
 // 	ft_next_token(list_token);
 // 	if (!*list_token || (*list_token)->type != T_WORD)
 // 	{
-// 		ft_putendl_fd("minishell: Syntax error: expected filename after redirection",
-// 			STDERR_FILENO);
+// 		ft_putendl_fd("minishell: Syntax error: expected
+//  	filename after redirection",STDERR_FILENO);
 // 		return (0);
 // 	}
 // 	return (1);

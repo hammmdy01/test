@@ -12,3 +12,5 @@ subshell        → '(' list ')'
 simple_cmd      → redirect* word (word | redirect)*
 
 redirect        → '<' word | '>' word | '>>' word | '<<' word
+
+DANS PARSER ARGS ft_parse_word_redir modifier beleeec
