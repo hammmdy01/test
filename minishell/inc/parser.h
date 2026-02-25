@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 05:43:59 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:58:54 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,5 +85,6 @@ t_io_type				ft_token_to_io_type(t_token_type type);
 char					*expand_variables(char *input, t_minishell *shell);
 void					print_ast_recursive(t_node *node, int depth,
 							char *prefix);
+int	add_word_node(t_node *node, t_token *token);
 
 #endif

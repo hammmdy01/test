@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:44:32 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/25 05:53:28 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 05:59:57 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,6 @@
 
 int	ft_parse_word_redir(t_node *node, t_token **list_token)
 {
-	char	**tmp_raw_args;
-	int		count;
-	int		i;
-
 	if (ft_is_redirection((*list_token)->type))
 	{
 		if (!ft_parse_io_redir(node, list_token))
@@ -46,7 +42,7 @@ int	ft_parse_word_redir(t_node *node, t_token **list_token)
 	}
 	else
 	{
-		if (!add_word_to_node(node, *list_token))
+		if (!add_word_node(node, *list_token))
 			return (0);
 		ft_next_token(list_token);
 	}
@@ -76,6 +72,7 @@ int	add_word_node(t_node *node, t_token *token)
 	if (node->args)
 		free(node->args);
 	node->args = tmp_raw_args;
+	return (1);
 }
 
 int	ft_count_args(t_token *list_token)
