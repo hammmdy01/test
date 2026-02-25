@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:44 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 06:27:24 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 23:44:40 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,24 +205,65 @@ char *expand_variables(char *input, t_minishell *shell)
 }
 
 
-char	**expand_args(char **args, t_minishell *shell)
-{
-	char	**expanded_args;
-	int		i;
+// char	**expand_args(char **args, t_minishell *shell)
+// {
+// 	char	**expanded_args;
+// 	int		i;
 
-	if (!args)
-		return (NULL);
-	expanded_args = malloc(sizeof(char *) * (count_args(args) + 1));
-	if (!expanded_args)
-		return (NULL);
-	i = 0;
-	while (args[i])
-	{
-		expanded_args[i] = expand_variables(args[i], shell);
-		i++;
-	}
-	expanded_args[i] = NULL;
-	return (expanded_args);
+// 	if (!args)
+// 		return (NULL);
+// 	expanded_args = malloc(sizeof(char *) * (count_args(args) + 1));
+// 	if (!expanded_args)
+// 		return (NULL);
+// 	i = 0;
+// 	while (args[i])
+// 	{
+// 		expanded_args[i] = expand_variables(args[i], shell);
+// 		i++;
+// 	}
+// 	expanded_args[i] = NULL;
+// 	return (expanded_args);
+// }
+
+char **expand_args(char **args, t_minishell *shell)
+{
+    char **expanded_args;
+    char **clean_args;
+    int i;
+
+    if (!args)
+        return (NULL);
+    
+    // 1️⃣ Expand chaque arg
+    expanded_args = malloc(sizeof(char *) * (count_args(args) + 1));
+    if (!expanded_args)
+        return (NULL);
+    
+    i = 0;
+    while (args[i])
+    {
+        expanded_args[i] = expand_variables(args[i], shell);
+        if (!expanded_args[i])
+        {
+            while (i > 0)
+                free(expanded_args[--i]);
+            free(expanded_args);
+            return (NULL);
+        }
+        i++;
+    }
+    expanded_args[i] = NULL;
+    
+    // 2️⃣ ✅ NOUVEAU : Supprimer les args vides
+    clean_args = remove_empty_args(expanded_args);
+    
+    // 3️⃣ Free les expanded_args (avant nettoyage)
+    i = 0;
+    while (expanded_args[i])
+        free(expanded_args[i++]);
+    free(expanded_args);
+    
+    return (clean_args);  // ✅ Peut être NULL si tout est vide
 }
 
 char	*ft_strjoin_char(char *s, char c)

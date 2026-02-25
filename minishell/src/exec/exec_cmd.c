@@ -6,22 +6,51 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:56 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 07:10:16 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 23:47:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 #include "../../inc/builtins.h"
 
-int	exec_simple_cmd(t_node *cmd_node, t_minishell *shell)
-{
+// int	exec_simple_cmd(t_node *cmd_node, t_minishell *shell)
+// {
     
-	if (!cmd_node || !cmd_node->expand_args || !cmd_node->expand_args[0])
-		return (0);
-	if (ft_is_builtin(cmd_node->expand_args[0]))
-		return (handle_builtin(cmd_node, shell));
-	else
-		return (exec_extrn_cmd(cmd_node, shell));
+// 	if (!cmd_node || !cmd_node->expand_args || !cmd_node->expand_args[0])
+// 		return (0);
+// 	if (ft_is_builtin(cmd_node->expand_args[0]))
+// 		return (handle_builtin(cmd_node, shell));
+// 	else
+// 		return (exec_extrn_cmd(cmd_node, shell));
+// }
+
+int exec_simple_cmd(t_node *cmd_node, t_minishell *shell)
+{
+    char **expanded_args;
+    int ret;
+
+    if (!cmd_node || !cmd_node->args)
+        return (0);
+
+    // Expand les args
+    expanded_args = expand_args(cmd_node->args, shell);
+    
+    // ✅ Si tous les args sont vides après expansion
+    if (!expanded_args || !expanded_args[0])
+    {
+        if (expanded_args)
+            free_split(expanded_args);
+        return (0);  // ✅ Exit code 0 (pas d'erreur, juste rien à faire)
+    }
+
+    // Exécution normale
+    if (ft_is_builtin(expanded_args[0]))
+        ret = handle_builtin(cmd_node, shell);
+    else
+        ret = exec_extrn_cmd(cmd_node, shell);
+
+    free_split(expanded_args);
+    return (ret);
 }
 
 int	handle_builtin(t_node *cmd_node, t_minishell *shell)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:04 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/21 17:31:56 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/25 00:05:08 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,40 @@ char	*build_full_path(char *dir, char *cmd)
 
 char	*get_cmd_path(char *cmd, char **envp)
 {
-	char **paths;
-	char *full_path;
-	int i;
+	char	**paths;
+	char	*full_path;
+	int		i;
 
-    i = -1;
+	i = -1;
 	if (!cmd || !cmd[0])
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, X_OK) == 0)
 			return (ft_strdup(cmd));
+		if (access(cmd, F_OK) == -1) // F_OK = test d'existence
+		{
+			exec_error(cmd, "No such file or directory");
+			exit(127); // ✅ Fichier n'existe pas
+		}
+		// Le fichier existe, vérifier s'il est exécutable
+		if (access(cmd, X_OK) == -1) // X_OK = test d'exécution
+		{
+			exec_error(cmd, "Permission denied");
+			exit(126); // ✅ Fichier existe mais pas exécutable
+		}
 		return (NULL);
 	}
-    paths = get_paths_env(envp);
-    if (!paths)
-        return (NULL);
-    while (paths[++i])
-    {
-        full_path = build_full_path(paths[i], cmd);
-        if (full_path && access(full_path, X_OK) == 0)
-            return (free_split(paths),full_path);
-        free(full_path);
-    }
-    free_split(paths);
-    return (NULL);
+	paths = get_paths_env(envp);
+	if (!paths)
+		return (NULL);
+	while (paths[++i])
+	{
+		full_path = build_full_path(paths[i], cmd);
+		if (full_path && access(full_path, X_OK) == 0)
+			return (free_split(paths), full_path);
+		free(full_path);
+	}
+	free_split(paths);
+	return (NULL);
 }

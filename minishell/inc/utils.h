@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:26:54 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 06:31:44 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 23:45:24 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char *ft_strjoin_char(char *s, char c);
 char **expand_args(char **args, t_minishell *shell);
 
 char *remove_quotes(char *str);
+char **remove_empty_args(char **args);
 
 
 // Debug mode toggle

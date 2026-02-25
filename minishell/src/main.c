@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 07:10:24 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/24 23:47:58 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -411,7 +411,6 @@ int main(void)
 		ast = ft_parsing(tokens, &shell);
 		if (!ast)
 		{
-			printf("❌ Parsing failed\n");
 			ft_clear_all_token(&tokens);
 			free(line);
 			continue;
