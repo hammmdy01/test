@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 15:40:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/09 15:50:19 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:22:11 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,30 @@ void	ft_print_quote_err(char c)
 	ft_putchar_fd(c, 2);
 	ft_putstr_fd("'\n", 2);
 	//minishell.exit_s = 258; Ajouter code d erreur
+}
+
+void	ft_clear_all_token(t_token **lst)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = *lst;
+	if (!current)
+		return ;
+	while (current)
+	{
+		free(current->value);
+		next = current->next;
+		free(current);
+		current = next;
+	}
+	*lst = NULL;
+}
+
+int	ft_is_separator(char *s)
+{
+	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t' || *s == '<'
+		|| *s == '>' || *s == '|' || *s == '(' || *s == ')')
+		return (1);
+	return (0);
 }

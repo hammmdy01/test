@@ -6,7 +6,7 @@
 #    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/20 17:00:29 by hazali           ###   ########.fr        #
+#    Updated: 2026/02/25 04:25:32 by hazali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,12 +29,19 @@ BUILTINS_DIR = $(SRC_DIR)/builtins
 LEXER_FILES = 	$(LEXER_DIR)/lexer.c \
 				$(LEXER_DIR)/lexer2.c \
 				$(LEXER_DIR)/lexer3.c  \
-				$(LEXER_DIR)/test.c  \
-				$(LEXER_DIR)/test2.c  
+				$(LEXER_DIR)/lexer4.c  \
+				$(LEXER_DIR)/lexer5.c  \
+				$(LEXER_DIR)/lexer6.c
 
-PARSER_FILES = 	$(PARSER_DIR)/test1.c \
-				$(PARSER_DIR)/test2.c \
-				$(PARSER_DIR)/test.c 
+PARSER_FILES = 	$(PARSER_DIR)/parser.c \
+				$(PARSER_DIR)/parser_utils.c \
+				$(PARSER_DIR)/parser_node.c \
+				$(PARSER_DIR)/parser_clean.c \
+				$(PARSER_DIR)/parser_args.c \
+				$(PARSER_DIR)/expand.c \
+				$(PARSER_DIR)/debug.c \
+				$(PARSER_DIR)/debug2.c \
+				$(PARSER_DIR)/expand2.c 
 
 EXEC_FILES = 	$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/exec_and_or.c \

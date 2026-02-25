@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:25 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 16:59:18 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:31:16 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,6 @@ char	*build_full_path(char *dir, char *cmd);
 char	**get_paths_env(char **envp);
 int		ft_is_builtin(char *cmd);
 int		ft_exec_builtin(char **args, t_minishell *shell);
+void	ft_close_pipes(int pipefd1, int pipefd2);
 
 #endif

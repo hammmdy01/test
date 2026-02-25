@@ -6,15 +6,15 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 09:50:20 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 07:46:16 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:31:26 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-# include "minishell.h"
 # include "lexer.h"
+# include "minishell.h"
 
 typedef enum e_io_type
 {
@@ -57,13 +57,18 @@ typedef struct s_node
 t_node					*ft_parsing(t_token *list_token, t_minishell *shell);
 t_node					*ft_parse_expression(t_token **list_token,
 							int precedence, t_minishell *shell);
-t_node					*ft_parse_parentheses(t_token **list_token, t_minishell *shell);
-t_node					*ft_parse_primary(t_token **list_token, t_minishell *shell);
-t_node					*ft_parse_command(t_token **list_token, t_minishell *shell);
+t_node					*ft_parse_parentheses(t_token **list_token,
+							t_minishell *shell);
+t_node					*ft_parse_primary(t_token **list_token,
+							t_minishell *shell);
+t_node					*ft_parse_command(t_token **list_token,
+							t_minishell *shell);
 t_io_node				*ft_create_io_node(t_io_type type, char *value, int fd);
 t_node					*ft_create_cmd_node(void);
-int						ft_parse_word_redir(t_node *node, t_token **list_token, t_minishell *shell);
-int						ft_parse_args(t_node *node, t_token **list_token, t_minishell *shell);
+int						ft_parse_word_redir(t_node *node, t_token **list_token,
+							t_minishell *shell);
+int						ft_parse_args(t_node *node, t_token **list_token,
+							t_minishell *shell);
 int						ft_count_args(t_token *list_token);
 t_node_type				ft_token_to_node_type(t_token_type type);
 void					ft_add_io_node(t_io_node **io_list, t_io_node *new_io);
@@ -77,5 +82,8 @@ t_node					*ft_create_node(t_node_type type, t_node *left,
 int						ft_parse_io_redir(t_node *node, t_token **list_token);
 t_node_type				ft_token_to_node_type(t_token_type type);
 t_io_type				ft_token_to_io_type(t_token_type type);
+char					*expand_variables(char *input, t_minishell *shell);
+void					print_ast_recursive(t_node *node, int depth,
+							char *prefix);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:48 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 13:26:48 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:33:03 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static int	ft_is_opt_n(char *s)
 
 int	ft_echo(char **args)
 {
-	int i;
-	int newline;
+	int	i;
+	int	newline;
 
 	i = 1;
 	newline = 1;

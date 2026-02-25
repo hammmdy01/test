@@ -1,80 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   lexer4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/12 11:03:10 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/24 23:26:55 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:23:06 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_is_operator(t_token_type type)
-{
-	if (type == T_PIPE || type == T_AND || type == T_OR)
-		return (1);
-	return (0);
-}
-int	ft_is_redirection(t_token_type type)
-{
-	if (type == T_LESS || type == T_GREAT || type == T_DLESS
-		|| type == T_DGREAT)
-		return (1);
-	return (0);
-}
-
-static void	ft_print_syntax_error(char *token_str)
-{
-	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	if (token_str)
-		ft_putstr_fd(token_str, 2);
-	else
-		ft_putstr_fd("newline", 2);
-	ft_putstr_fd("'\n", 2);
-}
-
-char	*ft_get_token_str(t_token_type type)
-{
-	if (type == T_PIPE)
-		return ("|");
-	else if (type == T_AND)
-		return ("&&");
-	else if (type == T_OR)
-		return ("||");
-	else if (type == T_LESS)
-		return ("<");
-	else if (type == T_GREAT)
-		return (">");
-	else if (type == T_DLESS)
-		return ("<<");
-	else if (type == T_DGREAT)
-		return (">>");
-	else if (type == T_OPEN_PARENT)
-		return ("(");
-	else if (type == T_CLOSE_PARENT)
-		return (")");
-	return ("unknown");
-}
-
-static int	ft_check_first_token(t_token *tokens)
-{
-	if (!tokens)
-		return (1);
-	if (ft_is_operator(tokens->type))
-	{
-		ft_print_syntax_error(ft_get_token_str(tokens->type));
-		return (0);
-	}
-	if (tokens->type == T_CLOSE_PARENT)
-	{
-		ft_print_syntax_error(")");
-		return (0);
-	}
-	return (1);
-}
 
 static int	ft_check_last_token(t_token *tokens)
 {
@@ -121,6 +58,14 @@ static int	ft_check_consecutive_tokens(t_token *curr)
 	return (1);
 }
 
+static int	check_open_parent(t_token *curr)
+{
+	if (!curr->next || curr->next->type == T_CLOSE_PARENT)
+		return (ft_print_syntax_error(")"), 0);
+	if (curr->next && ft_is_operator(curr->next->type))
+		return (ft_print_syntax_error(ft_get_token_str(curr->next->type)), 0);
+	return (1);
+}
 static int	ft_check_parentheses(t_token *tokens)
 {
 	t_token	*curr;
@@ -133,33 +78,19 @@ static int	ft_check_parentheses(t_token *tokens)
 		if (curr->type == T_OPEN_PARENT)
 		{
 			open_count++;
-			if (!curr->next || curr->next->type == T_CLOSE_PARENT)
-			{
-				ft_print_syntax_error(")");
+			if (!check_open_parent(curr))
 				return (0);
-			}
-			if (curr->next && ft_is_operator(curr->next->type))
-			{
-				ft_print_syntax_error(ft_get_token_str(curr->next->type));
-				return (0);
-			}
 		}
 		else if (curr->type == T_CLOSE_PARENT)
 		{
 			open_count--;
 			if (open_count < 0)
-			{
-				ft_print_syntax_error(")");
-				return (0);
-			}
+				return (ft_print_syntax_error(")"), 0);
 		}
 		curr = curr->next;
 	}
 	if (open_count != 0)
-	{
-		ft_print_syntax_error("(");
-		return (0);
-	}
+		return (ft_print_syntax_error("("), 0);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:53 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 15:32:18 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:23:43 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,24 @@ t_token	*ft_lexer(char *line)
 			line++;
 		if (!*line)
 			break ;
-		if (!ft_strncmp(line, "<<", 2) || !ft_strncmp(line, ">>", 2)
-			|| !ft_strncmp(line, "&&", 2) || !ft_strncmp(line, "||", 2))
-			error = (!ft_handle_separator(&line, &token_list));
-		else if (ft_is_fd_redirection(line))
-			error = (!ft_handle_fd_redirection(&line, &token_list));
-		else if (*line == '<' || *line == '>' || *line == '|' || *line == '('
-			|| *line == ')')
-			error = (!ft_handle_separator(&line, &token_list));
-		else
-			error = (!ft_append_word(&line, &token_list));
+		error = (!process_token(&line, &token_list));
 	}
 	if (token_list && !ft_validate_syntax(token_list))
 		return (ft_clear_all_token(&token_list), NULL);
 	return (token_list);
+}
+
+int	process_token(char **line, t_token **token_list)
+{
+    if (!ft_strncmp(*line, "<<", 2) || !ft_strncmp(*line, ">>", 2)
+        || !ft_strncmp(*line, "&&", 2) || !ft_strncmp(*line, "||", 2))
+        return (ft_handle_separator(line, token_list));
+    if (ft_is_fd_redirection(*line))
+        return (ft_handle_fd_redirection(line, token_list));
+    if (**line == '<' || **line == '>' || **line == '|'
+        || **line == '(' || **line == ')')
+        return (ft_handle_separator(line, token_list));
+    return (ft_append_word(line, token_list));
 }
 
 int	ft_is_fd_redirection(char *line)
@@ -87,70 +91,3 @@ int	ft_handle_separator(char **ptr_line, t_token **token_list)
 		return (ft_append_separator(T_PIPE, ptr_line, token_list));
 }
 
-int	ft_append_separator(t_token_type type, char **ptr_line,
-		t_token **token_list)
-{
-	t_token	*token;
-
-	token = ft_new_token(NULL, type);
-	if (type == T_GREAT || type == T_DGREAT)
-		token->fd = 1;
-	else if (type == T_LESS || type == T_DLESS)
-		token->fd = 0;
-	if (!token)
-		return (0);
-	ft_add_token(token_list, token);
-	(*ptr_line)++;
-	if (type == T_DGREAT || type == T_DLESS || type == T_OR || type == T_AND)
-		(*ptr_line)++;
-	return (1);
-}
-
-int	ft_append_word(char **ptr_line, t_token **token_list)
-{
-	char	*tmp_line;
-	char	*value;
-	t_token	*token;
-	size_t	i;
-
-	tmp_line = *ptr_line;
-	i = 0;
-	while (tmp_line[i] && !ft_is_separator(tmp_line + i))
-	{
-		if (ft_is_quote(tmp_line[i]))
-		{
-			if (!ft_skip_quotes(tmp_line, &i))
-				return (ft_print_quote_err(tmp_line[i]), 0);
-		}
-		else
-			i++;
-	}
-	value = ft_substr(tmp_line, 0, i);
-	if (!value)
-		return (0);
-	token = ft_new_token(value, T_WORD);
-	if (!token)
-		return (free(value), 0);
-	*ptr_line += i;
-	return (ft_add_token(token_list, token), 1);
-}
-void	print_tokens(t_token *tokens)
-{
-	t_token				*curr;
-	static const char	*type_names[] = {"WORD", "LESS", "GREAT", "DLESS",
-			"DGREAT", "PIPE", "OPEN_PARENT", "CLOSE_PARENT", "AND", "OR"};
-
-	curr = tokens;
-	printf("=== TOKENS ===\n");
-	while (curr)
-	{
-		printf("[%s]", type_names[curr->type]);
-		if (curr->value)
-			printf(" '%s'", curr->value);
-		if (curr->fd > 0)
-			printf(" (fd: %d)", curr->fd);
-		printf("\n");
-		curr = curr->next;
-	}
-	printf("==============\n");
-}

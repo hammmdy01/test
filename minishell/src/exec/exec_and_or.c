@@ -6,26 +6,28 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:11 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 15:39:10 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:42:04 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int exec_and_or(t_node *node, t_minishell *shell)
+int	exec_and_or(t_node *node, t_minishell *shell)
 {
-    int left_status = ft_execute(node->left, shell);
-    if (node->type == N_AND)
-    {
-        if (left_status == 0)
-            return (ft_execute(node->right, shell));
-        return (left_status);    
-    }
-    else if (node->type == N_OR)
-    {
-        if (left_status != 0)
-            return (ft_execute(node->right, shell));
-        return (left_status); 
-    }
-    return (0);
+	int	left_status;
+
+	left_status = ft_execute(node->left, shell);
+	if (node->type == N_AND)
+	{
+		if (left_status == 0)
+			return (ft_execute(node->right, shell));
+		return (left_status);
+	}
+	else if (node->type == N_OR)
+	{
+		if (left_status != 0)
+			return (ft_execute(node->right, shell));
+		return (left_status);
+	}
+	return (0);
 }

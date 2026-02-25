@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hammm <hammm@student.42.fr>                +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:25:25 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/21 17:39:18 by hammm            ###   ########.fr       */
+/*   Updated: 2026/02/25 04:32:02 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "../Libft/libft.h"
 # include "builtins.h"
-# include "env.h"
 # include "exec.h"
 # include "lexer.h"
 # include "parser.h"
@@ -49,15 +48,10 @@ typedef struct s_minishell
 	t_token			*curr_token;
 	// t_node			*ast;
 	int				exit_s;
-	// bool			signint_child;
-	// t_parse_err		parse_err;
 	int				stdin;
 	int				stdout;
 	char			**environ;
 	t_env			*envlst;
-	// bool			heredoc_sigint;
-	// struct termios	original_term;
 }					t_minishell;
-
 
 #endif

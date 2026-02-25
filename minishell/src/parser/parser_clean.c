@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   parser_clean.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/15 02:09:45 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:33:05 by hazali           ###   ########.fr       */
+/*   Created: 2026/02/25 02:31:53 by hazali            #+#    #+#             */
+/*   Updated: 2026/02/25 04:42:41 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_env(t_minishell *shell)
+void	ft_clear_ast(t_node **ast)
 {
-	t_env	*curr;
-
-	curr = shell->envlst;
-	while (curr)
-	{
-		if (curr->value)
-		{
-			ft_putstr_fd(curr->key, STDOUT_FILENO);
-			ft_putstr_fd("=", STDOUT_FILENO);
-			ft_putstr_fd(curr->value, STDOUT_FILENO);
-			ft_putstr_fd("\n", STDOUT_FILENO);
-		}
-		curr = curr->next;
-	}
-	return (0);
+	if (!*ast)
+		return ;
+	ft_clear_ast(&(*ast)->left);
+	ft_clear_ast(&(*ast)->right);
+	if ((*ast)->expand_args)
+		free_args((*ast)->expand_args);
+	if ((*ast)->io_list)
+		free_io_list((*ast)->io_list);
+	free(*ast);
+	*ast = NULL;
 }

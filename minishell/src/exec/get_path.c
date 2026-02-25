@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:04 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 00:05:08 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:42:14 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ char	*build_full_path(char *dir, char *cmd)
 	return (full_path);
 }
 
+char	*check_absolute_path(char *cmd)
+{
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
+	if (access(cmd, F_OK) == -1)
+	{
+		exec_error(cmd, "No such file or directory");
+		exit(127);
+	}
+	if (access(cmd, X_OK) == -1)
+	{
+		exec_error(cmd, "Permission denied");
+		exit(126);
+	}
+	return (NULL);
+}
+
 char	*get_cmd_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -54,20 +71,7 @@ char	*get_cmd_path(char *cmd, char **envp)
 		return (NULL);
 	if (ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, X_OK) == 0)
-			return (ft_strdup(cmd));
-		if (access(cmd, F_OK) == -1) // F_OK = test d'existence
-		{
-			exec_error(cmd, "No such file or directory");
-			exit(127); // ✅ Fichier n'existe pas
-		}
-		// Le fichier existe, vérifier s'il est exécutable
-		if (access(cmd, X_OK) == -1) // X_OK = test d'exécution
-		{
-			exec_error(cmd, "Permission denied");
-			exit(126); // ✅ Fichier existe mais pas exécutable
-		}
-		return (NULL);
+		return (check_absolute_path(cmd));
 	}
 	paths = get_paths_env(envp);
 	if (!paths)

@@ -6,21 +6,21 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:52 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 13:26:30 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:33:01 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static char *ft_get_env_value(t_env *env, char *key)
+static char	*ft_get_env_value(t_env *env, char *key)
 {
-    while (env)
-    {
-        if (!ft_strcmp(env->key, key))
-            return (env->value);
-        env = env->next;
-    }
-    return (NULL);
+	while (env)
+	{
+		if (!ft_strcmp(env->key, key))
+			return (env->value);
+		env = env->next;
+	}
+	return (NULL);
 }
 
 static void	set_env(t_env **env, char *key, char *value)
@@ -39,8 +39,7 @@ static void	set_env(t_env **env, char *key, char *value)
 		}
 		tmp = tmp->next;
 	}
-
-    new = ft_calloc(1, sizeof(t_env));
+	new = ft_calloc(1, sizeof(t_env));
 	new->key = ft_strdup(key);
 	new->value = ft_strdup(value);
 	new->next = *env;
@@ -100,6 +99,5 @@ int	ft_cd(char **args, t_minishell *shell)
 	set_env(&shell->envlst, "OLDPWD", old_pwd);
 	if (getcwd(new_pwd, 4096))
 		set_env(&shell->envlst, "PWD", new_pwd);
-	
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:37 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 13:26:56 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:41:53 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	is_valid_identifier(char *str)
 {
 	int	i;
 
-    i = 0;
+	i = 0;
 	if (!str)
 		return (0);
 	if (!ft_isalpha(str[0]) && str[0] != '_')
@@ -48,7 +48,7 @@ static void	print_export(t_env *env)
 
 static void	add_or_update_env(char *key, char *value, t_env **env_list)
 {
-    t_env	*curr;
+	t_env	*curr;
 	t_env	*new;
 
 	curr = *env_list;
@@ -65,20 +65,47 @@ static void	add_or_update_env(char *key, char *value, t_env **env_list)
 		}
 		curr = curr->next;
 	}
-		new = ft_calloc(1, sizeof(t_env));
+	new = ft_calloc(1, sizeof(t_env));
 	new->key = ft_strdup(key);
-	new->value = value ? ft_strdup(value) : NULL;
+	if (value)
+		new->value = ft_strdup(value);
+	else
+		new->value = NULL;
 	new->next = *env_list;
 	*env_list = new;
 }
 
-int ft_export(char **args, t_minishell *shell)
+static int	process_export_arg(char *arg, t_env **envlst)
 {
-    int		i;
 	char	*equal;
 	char	*key;
 	char	*value;
-	int		ret;
+
+	if (!is_valid_identifier(arg))
+	{
+		ft_putstr_fd("minishell: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		return (1);
+	}
+	equal = ft_strchr(arg, '=');
+	if (equal)
+	{
+		*equal = '\0';
+		key = arg;
+		value = equal + 1;
+		add_or_update_env(key, value, envlst);
+		*equal = '=';
+	}
+	else
+		add_or_update_env(arg, NULL, envlst);
+	return (0);
+}
+
+int	ft_export(char **args, t_minishell *shell)
+{
+	int	i;
+	int	ret;
 
 	if (!args[1])
 	{
@@ -89,26 +116,8 @@ int ft_export(char **args, t_minishell *shell)
 	i = 1;
 	while (args[i])
 	{
-		if (!is_valid_identifier(args[i]))
-		{
-			ft_putstr_fd("minishell: export: `", 2);
-			ft_putstr_fd(args[i], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
+		if (process_export_arg(args[i], &shell->envlst))
 			ret = 1;
-			i++;
-			continue;
-		}	
-		equal = ft_strchr(args[i], '=');
-		if (equal)
-		{
-			*equal = '\0';  
-			key = args[i];
-			value = equal + 1;
-			add_or_update_env(key, value, &shell->envlst);
-			*equal = '=';  
-		}
-		else
-			add_or_update_env(args[i], NULL, &shell->envlst);
 		i++;
 	}
 	return (ret);

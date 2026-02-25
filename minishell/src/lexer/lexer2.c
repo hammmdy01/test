@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 15:31:30 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:22:08 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,35 @@ int	ft_handle_fd_redirection(char **line, t_token **list)
 		i++;
 	fd = ft_atoi(start);
 	*line += i;
-	if (!ft_strncmp(*line, ">>", 2))
-		token = ft_new_token(NULL, T_DGREAT);
-	else if (!ft_strncmp(*line, "<<", 2))
-		token = ft_new_token(NULL, T_DLESS);
-	else if (**line == '>')
-		token = ft_new_token(NULL, T_GREAT);
-	else if (**line == '<')
-		token = ft_new_token(NULL, T_LESS);
-	else
-		return (0);
+	token = get_redir_token(line);
 	if (!token)
 		return (0);
 	token->fd = fd;
 	ft_add_token(list, token);
+	advance_redir_line(line);
+	return (1);
+}
+
+void advance_redir_line(char **line)
+{
 	if (!ft_strncmp(*line, ">>", 2) || !ft_strncmp(*line, "<<", 2))
 		*line += 2;
 	else
 		(*line)++;
-	return (1);
+}
+
+t_token	*get_redir_token(char **line)
+{
+	if (!ft_strncmp(*line, ">>", 2))
+		return (ft_new_token(NULL, T_DGREAT));
+	else if (!ft_strncmp(*line, "<<", 2))
+		return (ft_new_token(NULL, T_DLESS));
+	else if (**line == '>')
+		return (ft_new_token(NULL, T_GREAT));
+	else if (**line == '<')
+		return (ft_new_token(NULL, T_LESS));
+	else
+		return (NULL);
 }
 
 t_token	*ft_new_token(char *value, t_token_type type)
@@ -77,28 +87,3 @@ void	ft_add_token(t_token **lst, t_token *new_token)
 	new_token->prev = current;
 }
 
-void	ft_clear_all_token(t_token **lst)
-{
-	t_token	*current;
-	t_token	*next;
-
-	current = *lst;
-	if (!current)
-		return ;
-	while (current)
-	{
-		free(current->value);
-		next = current->next;
-		free(current);
-		current = next;
-	}
-	*lst = NULL;
-}
-
-int	ft_is_separator(char *s)
-{
-	if (!ft_strncmp(s, "&&", 2) || *s == ' ' || *s == '\t' || *s == '<'
-		|| *s == '>' || *s == '|' || *s == '(' || *s == ')')
-		return (1);
-	return (0);
-}

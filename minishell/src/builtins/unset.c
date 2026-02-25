@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 02:09:41 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 13:27:00 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:33:21 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	remove_env(char *key, t_env **env_list)
 
 int	ft_unset(char **args, t_minishell *shell)
 {
-	int i;
+	int	i;
 
 	if (!args[1])
 		return (0);

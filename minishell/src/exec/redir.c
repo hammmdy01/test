@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/20 12:34:02 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/20 15:58:18 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:42:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,37 +36,37 @@ int	handle_redir(t_io_node *io_list)
 	t_io_node	*curr;
 	int			fd;
 
-    curr = io_list;
-    while (curr)
-    {
-        fd = open_redir_file(curr);
-        if (fd == -1)
-            return (-1);
-        if (curr->type == IO_IN || curr->type == IO_HEREDOC)
-        {
-            dup2(fd, STDIN_FILENO);
-            close(fd);
-        }
-        else if (curr->type == IO_OUT || curr->type == IO_APPEND)
-        {
-            dup2(fd, STDOUT_FILENO);
-            close(fd);
-        }
-        curr = curr->next;
-    }
-    return (0);
+	curr = io_list;
+	while (curr)
+	{
+		fd = open_redir_file(curr);
+		if (fd == -1)
+			return (-1);
+		if (curr->type == IO_IN || curr->type == IO_HEREDOC)
+		{
+			dup2(fd, STDIN_FILENO);
+			close(fd);
+		}
+		else if (curr->type == IO_OUT || curr->type == IO_APPEND)
+		{
+			dup2(fd, STDOUT_FILENO);
+			close(fd);
+		}
+		curr = curr->next;
+	}
+	return (0);
 }
 
-void    reset_fds_std(int fd_stdin, int fd_stdout)
+void	reset_fds_std(int fd_stdin, int fd_stdout)
 {
-    if (fd_stdin != -1)
-    {
-        dup2(fd_stdin, STDIN_FILENO);
-        close(fd_stdin);
-    }
-    if (fd_stdout != -1)
-    {
-        dup2(fd_stdout, STDOUT_FILENO);
-        close(fd_stdout);
-    }
+	if (fd_stdin != -1)
+	{
+		dup2(fd_stdin, STDIN_FILENO);
+		close(fd_stdin);
+	}
+	if (fd_stdout != -1)
+	{
+		dup2(fd_stdout, STDOUT_FILENO);
+		close(fd_stdout);
+	}
 }

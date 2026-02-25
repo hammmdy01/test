@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/19 14:27:44 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 04:31:18 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,10 @@ int					ft_is_redirection(t_token_type type);
 char				*ft_get_token_str(t_token_type type);
 int					ft_handle_fd_redirection(char **line, t_token **list);
 int					ft_is_fd_redirection(char *line);
+int					process_token(char **line, t_token **token_list);
+void				advance_redir_line(char **line);
+t_token				*get_redir_token(char **line);
+void				ft_print_syntax_error(char *token_str);
+int					ft_check_first_token(t_token *tokens);
 
 #endif

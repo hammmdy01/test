@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:25:47 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/24 06:31:36 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/25 03:33:07 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,68 +104,79 @@ void	exit_with_error(char *msg, int code)
 	exit(code);
 }
 
-t_env *init_env_list(char **envp)
+t_env	*init_env_list(char **envp)
 {
-    t_env   *env_list;
-    t_env   *new_node;
-    char    *equal;
-    int     i;
+	t_env	*env_list;
+	t_env	*new_node;
+	int		i;
 
-    env_list = NULL;
-    i = 0;
-    while (envp[i])
-    {
-        equal = ft_strchr(envp[i], '=');
-        if (equal)
-        {
-            new_node = malloc(sizeof(t_env));
-            if (!new_node)
-                return (NULL);
-            new_node->key = ft_substr(envp[i], 0, equal - envp[i]);
-            new_node->value = ft_strdup(equal + 1);
-            new_node->next = NULL;
-            
-            // Ajouter à la fin de la liste
-            if (!env_list)
-                env_list = new_node;
-            else
-            {
-                t_env *tmp = env_list;
-                while (tmp->next)
-                    tmp = tmp->next;
-                tmp->next = new_node;
-            }
-        }
-        i++;
-    }
-    return (env_list);
+	env_list = NULL;
+	i = 0;
+	while (envp[i])
+	{
+		new_node = create_env_node(envp[i]);
+		if (new_node)
+			add_env_node(&env_list, new_node);
+		i++;
+	}
+	return (env_list);
+}
+t_env	*create_env_node(char *env_str)
+{
+	t_env	*new_node;
+	char	*equal;
+
+	equal = ft_strchr(env_str, '=');
+	if (!equal)
+		return (NULL);
+	new_node = malloc(sizeof(t_env));
+	if (!new_node)
+		return (NULL);
+	new_node->key = ft_substr(env_str, 0, equal - env_str);
+	new_node->value = ft_strdup(equal + 1);
+	new_node->next = NULL;
+	return (new_node);
 }
 
-char *remove_quotes(char *str)
+void	add_env_node(t_env **env_list, t_env *new_node)
 {
-    char *result;
-    char *dst;
-    char quote;
-    int i;
+	t_env	*tmp;
 
-    if (!str)
-        return (NULL);
-    result = malloc(ft_strlen(str) + 1);
-    if (!result)
-        return (NULL);
-    dst = result;
-    i = 0;
-    quote = 0;
-    while (str[i])
-    {
-        if ((str[i] == '"' || str[i] == '\'') && !quote)
-            quote = str[i];
-        else if (str[i] == quote)
-            quote = 0;
-        else
-            *dst++ = str[i];
-        i++;
-    }
-    *dst = '\0';
-    return (result);
+	if (!*env_list)
+	{
+		*env_list = new_node;
+		return ;
+	}
+	tmp = *env_list;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = new_node;
+}
+char	*remove_quotes(char *str)
+{
+	char	*result;
+	char	*dst;
+	char	quote;
+	int		i;
+
+	if (!str)
+		return (NULL);
+	result = malloc(ft_strlen(str) + 1);
+	if (!result)
+		return (NULL);
+	dst = result;
+	i = 0;
+	quote = 0;
+	while (str[i])
+	{
+		if ((str[i] == '"' || str[i] == '\'') && !quote)
+			quote = str[i];
+		else if (str[i] == quote)
+			quote = 0;
+		else
+			*dst++ = str[i];
+		i++;
+	}
+	*dst = '\0';
+	return (result);
 }
