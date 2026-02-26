@@ -6,7 +6,7 @@
 #    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/25 04:25:32 by hazali           ###   ########.fr        #
+#    Updated: 2026/02/26 04:31:03 by hazali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ LEXER_FILES = 	$(LEXER_DIR)/lexer.c \
 
 PARSER_FILES = 	$(PARSER_DIR)/parser.c \
 				$(PARSER_DIR)/parser_utils.c \
+				$(PARSER_DIR)/parser_utils2.c \
 				$(PARSER_DIR)/parser_node.c \
 				$(PARSER_DIR)/parser_clean.c \
 				$(PARSER_DIR)/parser_args.c \
@@ -51,7 +52,8 @@ EXEC_FILES = 	$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/redir.c \
 				$(EXEC_DIR)/hd.c 
 UTILS_FILES = 	$(UTILS_DIR)/utils.c \
-				$(UTILS_DIR)/test2.c
+				$(UTILS_DIR)/utils2.c \
+				$(UTILS_DIR)/utils3.c
 
 BUILTINS_FILES = 	$(BUILTINS_DIR)/builtins.c \
 					$(BUILTINS_DIR)/cd.c \

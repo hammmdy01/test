@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/25 02:31:49 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:42:34 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/26 02:44:30 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*extract_var_name(char *str, int *index)
 	int		len;
 	char	*var_name;
 
-	(*index)++; // Skip the '$'
+	(*index)++;
 	if (str[*index] == '?')
 	{
 		(*index)++;
@@ -55,7 +55,7 @@ char	*extract_var_name(char *str, int *index)
 		(*index)++;
 	len = *index - start;
 	if (len == 0)
-		return (ft_strdup("")); // ✅ Chaîne vide = $ seul
+		return (ft_strdup(""));
 	var_name = ft_substr(str, start, len);
 	return (var_name);
 }
@@ -68,7 +68,6 @@ char	**expand_args(char **args, t_minishell *shell)
 
 	if (!args)
 		return (NULL);
-	// 1️⃣ Expand chaque arg
 	expanded_args = malloc(sizeof(char *) * (count_args(args) + 1));
 	if (!expanded_args)
 		return (NULL);
@@ -77,23 +76,16 @@ char	**expand_args(char **args, t_minishell *shell)
 	{
 		expanded_args[i] = expand_variables(args[i], shell);
 		if (!expanded_args[i])
-		{
-			while (i > 0)
-				free(expanded_args[--i]);
-			free(expanded_args);
-			return (NULL);
-		}
+			return (ft_free_expandes_args(expanded_args, i), NULL);
 		i++;
 	}
 	expanded_args[i] = NULL;
-	// 2️⃣ ✅ NOUVEAU : Supprimer les args vides
 	clean_args = remove_empty_args(expanded_args);
-	// 3️⃣ Free les expanded_args (avant nettoyage)
 	i = 0;
 	while (expanded_args[i])
 		free(expanded_args[i++]);
 	free(expanded_args);
-	return (clean_args); // ✅ Peut être NULL si tout est vide
+	return (clean_args);
 }
 
 char	*ft_strjoin_char(char *s, char c)

@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 09:46:44 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:42:43 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/26 02:28:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ t_io_node	*ft_create_io_node(t_io_type type, char *value, int fd)
 		free(io_node);
 		return (NULL);
 	}
-	io_node->next = NULL; // pas oblige a mon avis
+	io_node->next = NULL;
 	return (io_node);
 }
 

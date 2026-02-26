@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:26:54 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:31:23 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/26 02:33:03 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char					**remove_empty_args(char **args);
 t_env					*create_env_node(char *env_str);
 void					add_env_node(t_env **env_list, t_env *new_node);
 char					**cpy_non_empty_args(char **args, char **result);
+void					ft_free_tmp_arg(char **tmp_arg, int i);
 
 // Debug mode toggle
 # define DEBUG_MODE 1

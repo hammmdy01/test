@@ -6,7 +6,7 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:44:32 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/25 05:59:57 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/26 02:27:58 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,7 @@ int	ft_parse_args(t_node *node, t_token **list_token, t_minishell *shell)
 	{
 		tmp_arg[i] = ft_strdup((*list_token)->value);
 		if (!tmp_arg[i])
-		{
-			while (i > 0)
-				free(tmp_arg[--i]);
-			free(tmp_arg);
-			return (0);
-		}
+			return (ft_free_tmp_arg(tmp_arg, i), 0);
 		i++;
 		ft_next_token(list_token);
 	}
@@ -145,10 +140,4 @@ int	ft_parse_io_redir(t_node *node, t_token **list_token)
 		ft_next_token(list_token);
 	}
 	return (1);
-}
-
-void	ft_next_token(t_token **list_token)
-{
-	if (*list_token)
-		*list_token = (*list_token)->next;
 }

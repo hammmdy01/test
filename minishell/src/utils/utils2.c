@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test2.c                                            :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/24 23:43:41 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 03:45:54 by hazali           ###   ########.fr       */
+/*   Updated: 2026/02/26 04:31:15 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ char	**remove_empty_args(char **args)
 	return (cpy_non_empty_args(args, result));
 }
 
-char **cpy_non_empty_args(char **args, char **result)
+char	**cpy_non_empty_args(char **args, char **result)
 {
-    int		i;
-	int		j;
+	int	i;
+	int	j;
 
-    i = 0;
+	i = 0;
 	j = 0;
-    while (args[i])
+	while (args[i])
 	{
 		if (args[i][0] != '\0')
 		{
@@ -70,4 +70,18 @@ char **cpy_non_empty_args(char **args, char **result)
 	}
 	result[j] = NULL;
 	return (result);
+}
+
+void	exec_error(char *cmd, char *msg)
+{
+	ft_putstr_fd("minishell: ", STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
+	ft_putendl_fd(msg, STDERR_FILENO);
+}
+
+void	exit_with_error(char *msg, int code)
+{
+	ft_putendl_fd(msg, STDERR_FILENO);
+	exit(code);
 }
