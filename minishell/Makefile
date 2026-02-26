@@ -6,7 +6,7 @@
 #    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/26 04:31:03 by hazali           ###   ########.fr        #
+#    Updated: 2026/02/26 05:08:02 by hazali           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ EXEC_FILES = 	$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/hd.c 
 UTILS_FILES = 	$(UTILS_DIR)/utils.c \
 				$(UTILS_DIR)/utils2.c \
+				$(UTILS_DIR)/utils4.c \
 				$(UTILS_DIR)/utils3.c
 
 BUILTINS_FILES = 	$(BUILTINS_DIR)/builtins.c \
