@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/15 04:26:54 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/26 05:07:41 by hazali           ###   ########.fr       */
+/*   Updated: 2026/03/01 09:02:11 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ void					add_env_node(t_env **env_list, t_env *new_node);
 char					**cpy_non_empty_args(char **args, char **result);
 void					ft_free_tmp_arg(char **tmp_arg, int i);
 void					free_env_list(t_env **env_list);
+
+void handle_sigint(int sig);
+void setup_signals(void);
 
 // Debug mode toggle
 # define DEBUG_MODE 1

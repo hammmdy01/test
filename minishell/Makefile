@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hazali <hazali@student.42.fr>              +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/05 06:02:17 by hazali            #+#    #+#              #
-#    Updated: 2026/02/26 05:08:02 by hazali           ###   ########.fr        #
+#    Updated: 2026/03/01 09:01:37 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,8 @@ EXEC_FILES = 	$(EXEC_DIR)/exec.c \
 				$(EXEC_DIR)/get_path.c \
 				$(EXEC_DIR)/redir.c \
 				$(EXEC_DIR)/hd.c 
-UTILS_FILES = 	$(UTILS_DIR)/utils.c \
+UTILS_FILES = 	$(UTILS_DIR)/signals.c \
+				$(UTILS_DIR)/utils.c \
 				$(UTILS_DIR)/utils2.c \
 				$(UTILS_DIR)/utils4.c \
 				$(UTILS_DIR)/utils3.c
