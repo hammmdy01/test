@@ -1,1 +1,0 @@
-dans le parsing le premier token peut etre des redir mais il faut qu'il y ai une commande derriere

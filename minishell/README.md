@@ -66,3 +66,4 @@ AI (Claude 4.5 Sonnet) was used as a debugging and learning tool for:
 - Debugging edge cases in variable expansion and quote handling
 - Explaining complex pointer operations and POSIX standards
 - Explaining and exemples how does the normal shell lexer/parser works
+- Helped writing the Readme file

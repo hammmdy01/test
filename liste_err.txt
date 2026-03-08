@@ -1,2 +1,0 @@
-Erreur pas de token : 
-Erreur de syntaxe :

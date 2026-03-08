@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 05:24:06 by hazali            #+#    #+#             */
-/*   Updated: 2026/03/01 09:03:00 by marvin           ###   ########.fr       */
+/*   Updated: 2026/03/08 17:17:21 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/lexer.h"
 #include "../inc/minishell.h"
 #include "../inc/utils.h"
-#include "../inc/lexer.h"
-
 
 // static void	ft_handler_signum(int signum)
 // {
@@ -27,43 +26,43 @@
 // 	}
 // }
 
-
 // int main(void)
 // {
 // 	char        *line;
 // 	t_token     *tokens;
 // 	t_node      *ast;
 // 	t_minishell shell;
-	
+
 // 	// Initialiser le shell
 // 	shell.exit_s = 0;
 // 	shell.stdin = dup(STDIN_FILENO);
 // 	shell.stdout = dup(STDOUT_FILENO);
-// 	shell.environ = __environ;  // ou récupérer depuis main(int ac, char **av, char **env)
-// 	shell.envlst = init_env_list(shell.environ);  // TODO: initialiser la liste d'environnement
-	
+// shell.environ = __environ;
+// 	shell.envlst = init_env_list(shell.environ);
+// TODO: initialiser la liste d'environnement
+
 // 	while (1)
 // 	{
 // 		line = readline("minishell> ");
 // 		if (!line)
 // 		{
 // 			printf("exit\n");
-// 			break;
+// 			break ;
 // 		}
 // 		if (!*line)
 // 		{
 // 			free(line);
-// 			continue;
+// 			continue ;
 // 		}
 // 		add_history(line);
-		
+
 // 		// LEXER
 // 		tokens = ft_lexer(line);
 // 		if (!tokens)
 // 		{
 // 			shell.exit_s = 2;
 // 			free(line);
-// 			continue;
+// 			continue ;
 // 		}
 // 		// PARSER
 // 		ast = ft_parsing(tokens, &shell);
@@ -71,18 +70,18 @@
 // 		{
 // 			ft_clear_all_token(&tokens);
 // 			free(line);
-// 			continue;
+// 			continue ;
 // 		}
-		
+
 // 		// EXECUTION
 // 		shell.exit_s = ft_execute(ast, &shell);
-		
+
 // 		// Cleanup
 // 		ft_clear_all_token(&tokens);
 // 		ft_clear_ast(&ast);
 // 		free(line);
 // 	}
-	
+
 // 	close(shell.stdin);
 // 	close(shell.stdout);
 // 	rl_clear_history();

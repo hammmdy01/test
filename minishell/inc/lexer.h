@@ -6,12 +6,15 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 14:05:00 by hazali            #+#    #+#             */
-/*   Updated: 2026/02/25 04:31:18 by hazali           ###   ########.fr       */
+/*   Updated: 2026/03/08 17:26:45 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
+
+# include <stddef.h>
+# include <stdio.h>
 
 typedef enum e_token_type
 {

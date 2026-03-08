@@ -6,32 +6,11 @@
 /*   By: hazali <hazali@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:44:32 by hammm             #+#    #+#             */
-/*   Updated: 2026/02/26 02:27:58 by hazali           ###   ########.fr       */
+/*   Updated: 2026/03/08 17:30:19 by hazali           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// void	ft_print_ast_compact(t_node *ast)
-// {
-// 	if (!ast)
-// 	{
-// 		printf("AST: (null)\n");
-// 		return ;
-// 	}
-// 	printf("AST: ");
-// 	if (ast->type == N_CMD)
-// 		printf("CMD(%s)", ast->args ? ast->args : "");
-// 	else if (ast->type == N_PIPE)
-// 		printf("PIPE");
-// 	else if (ast->type == N_AND)
-// 		printf("AND");
-// 	else if (ast->type == N_OR)
-// 		printf("OR");
-// 	else
-// 		printf("%s", get_node_type_str(ast->type));
-// 	printf("\n");
-// }
 
 int	ft_parse_word_redir(t_node *node, t_token **list_token)
 {
